@@ -1,0 +1,31 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - dev/userservice
+      - main
+      - dev/paymentservice
+
+
+jobs:
+  build-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: 17
+
+      - name: JUnit
+        run: mvn -B test --file pom.xml
+
+      - name: Build
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
