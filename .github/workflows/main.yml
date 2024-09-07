@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "dev/userservice", "dev/paymentservice"]
 
   workflow_dispatch:
 
@@ -20,8 +20,8 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-#      - name: JUnit
-#        run: mvn -B test --file pom.xml
+      - name: JUnit
+        run: mvn -B test --file pom.xml
 
       - name: Build
         run: |
