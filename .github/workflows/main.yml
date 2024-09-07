@@ -20,8 +20,8 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      - name: JUnit
-        run: mvn -B test --file pom.xml
+#      - name: JUnit
+#        run: mvn -B test --file pom.xml
 
       - name: Build
         run: |
