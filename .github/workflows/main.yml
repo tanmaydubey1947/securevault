@@ -2,19 +2,17 @@ name: Build and Deploy
 
 on:
   push:
-    branches:
-      - dev/userservice
-      - main
-      - dev/paymentservice
+    branches: ["main"]
 
+  workflow_dispatch:
 
 jobs:
-  build-deploy:
+  build:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK
         uses: actions/setup-java@v4
