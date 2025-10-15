@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Refactored readme">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/SecureVaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/SecureVaultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/AuthDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/AuthDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/PaymentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/PaymentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/SecureVaultDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/SecureVaultDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/entity/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/entity/Transactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/AuthRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/AuthRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/SecureVaultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/SecureVaultRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/UserRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
