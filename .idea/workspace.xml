@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Refactored readme">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/SecureVaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/SecureVaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/AuthDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/AuthDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/PaymentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/PaymentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/SecureVaultDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/SecureVaultDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/entity/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/entity/Transactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/AuthRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/AuthRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/SecureVaultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/SecureVaultRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/securevault/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/securevault/repository/UserRepository.java" afterDir="false" />
+    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Added dummy classes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +177,21 @@
       <option name="project" value="LOCAL" />
       <updated>1725687979151</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added dummy classes">
+      <created>1760544512213</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1760544512214</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added dummy classes">
+      <created>1760544519733</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1760544519733</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -203,6 +205,7 @@
     <MESSAGE value="Test commmit" />
     <MESSAGE value="Added README content" />
     <MESSAGE value="Refactored readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored readme" />
+    <MESSAGE value="Added dummy classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added dummy classes" />
   </component>
 </project>
