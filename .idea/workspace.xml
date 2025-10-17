@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Added dummy classes">
+    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Added API Exception Handler">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +65,20 @@
       <recent name="com.securevault.paymentservice.entity" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ApiExceptionHandler">
+    <configuration name="ApiExceptionHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.securevault.exception.ApiExceptionHandler" />
+      <module name="secure-vault" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.securevault.exception.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PaymentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.securevault.paymentservice.PaymentServiceApplication" />
       <module name="paymentservice" />
@@ -94,6 +107,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ApiExceptionHandler" />
         <item itemvalue="Application.PaymentServiceApplication" />
       </list>
     </recent_temporary>
@@ -191,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1760544519733</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added API Exception Handler">
+      <created>1760639595051</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1760639595051</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,6 +227,7 @@
     <MESSAGE value="Added README content" />
     <MESSAGE value="Refactored readme" />
     <MESSAGE value="Added dummy classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added dummy classes" />
+    <MESSAGE value="Added API Exception Handler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added API Exception Handler" />
   </component>
 </project>
