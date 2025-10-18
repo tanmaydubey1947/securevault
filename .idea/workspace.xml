@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Added API Exception Handler">
+    <list default="true" id="3fc88503-c385-43a6-9daf-8c66576b8ac2" name="Changes" comment="Added utility class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +65,7 @@
       <recent name="com.securevault.paymentservice.entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ApiExceptionHandler">
+  <component name="RunManager" selected="Application.Solution">
     <configuration name="ApiExceptionHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.securevault.exception.ApiExceptionHandler" />
       <module name="secure-vault" />
@@ -92,21 +92,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
+    <configuration name="Solution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.securevault.util.Solution" />
       <module name="secure-vault" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="secure-vault" />
-      <option name="filePath" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.securevault.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Solution" />
         <item itemvalue="Application.ApiExceptionHandler" />
         <item itemvalue="Application.PaymentServiceApplication" />
       </list>
@@ -212,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1760639595051</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added utility class">
+      <created>1760726119935</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1760726119935</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -228,6 +236,7 @@
     <MESSAGE value="Refactored readme" />
     <MESSAGE value="Added dummy classes" />
     <MESSAGE value="Added API Exception Handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added API Exception Handler" />
+    <MESSAGE value="Added utility class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added utility class" />
   </component>
 </project>
