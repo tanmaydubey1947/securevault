@@ -14,7 +14,7 @@ public class User {
     private int id;
     private String fullName;
     private String email;
-    private String passwordHash;
+    private String password;
     private String phoneNumber;
     private KycStatus kycStatus;
     private AccountStatus accountStatus;
