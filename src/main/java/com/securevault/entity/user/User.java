@@ -15,10 +15,10 @@ public class User {
     private String fullName;
     private String email;
     private String passwordHash;
-    private KycStatus kycStatus;
     private String phoneNumber;
+    private KycStatus kycStatus;
     private AccountStatus accountStatus;
-    private LocalDateTime createdAt;
     private Role role;
+    private LocalDateTime createdAt;
 
 }
