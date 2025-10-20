@@ -2,11 +2,23 @@
 -- 1. USERS TABLE
 -- =========================
 CREATE TABLE users (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     kyc_status ENUM('PENDING', 'VERIFIED', 'REJECTED') DEFAULT 'PENDING',
+    phone_number VARCHAR(20) NULL,
+    account_status ENUM('ACTIVE', 'SUSPENDED', 'CLOSED', 'INACTIVE') DEFAULT 'INACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =========================
+-- 1(a). USERS VERIFICATION TABLE
+-- =========================
+CREATE TABLE users_verification (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id CHAR(36) NOT NULL,
+    otp VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -14,7 +26,7 @@ CREATE TABLE users (
 -- 2. BANK_ACCOUNTS TABLE
 -- =========================
 CREATE TABLE bank_accounts (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id CHAR(36) NOT NULL,
     account_number VARCHAR(50) NOT NULL,
     ifsc_code VARCHAR(20) NOT NULL,
@@ -29,7 +41,7 @@ CREATE TABLE bank_accounts (
 -- 3. WALLETS TABLE
 -- =========================
 CREATE TABLE wallets (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id CHAR(36) NOT NULL,
     currency CHAR(3) NOT NULL DEFAULT 'INR',
     available_amount DECIMAL(18,2) NOT NULL DEFAULT 0.00,
@@ -45,7 +57,7 @@ CREATE TABLE wallets (
 -- 4. TRANSACTIONS TABLE
 -- =========================
 CREATE TABLE transactions (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     wallet_id CHAR(36) NOT NULL,
     type ENUM('TOPUP', 'WITHDRAW', 'TRANSFER', 'RECEIVE', 'REFUND', 'ADJUSTMENT') NOT NULL,
     status ENUM('INITIATED', 'PENDING', 'SUCCESS', 'FAILED') NOT NULL DEFAULT 'INITIATED',
@@ -68,7 +80,7 @@ CREATE TABLE transactions (
 -- 5. LEDGER_ENTRIES TABLE
 -- =========================
 CREATE TABLE ledger_entries (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     transaction_id CHAR(36) NOT NULL,
     account_ref VARCHAR(255) NOT NULL,
     entry_type ENUM('DEBIT', 'CREDIT') NOT NULL,
@@ -83,7 +95,7 @@ CREATE TABLE ledger_entries (
 -- 6. IDEMPOTENCY_KEYS TABLE
 -- =========================
 CREATE TABLE idempotency_keys (
-    idempotency_key VARCHAR(255) PRIMARY KEY,
+    idempotency_key BIGINT PRIMARY KEY AUTO_INCREMENT,,
     user_id CHAR(36) NOT NULL,
     request_hash VARCHAR(255) NOT NULL,
     transaction_id CHAR(36) NULL,
@@ -96,7 +108,7 @@ CREATE TABLE idempotency_keys (
 -- 7. NOTIFICATIONS TABLE
 -- =========================
 CREATE TABLE notifications (
-    id CHAR(36) PRIMARY KEY,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id CHAR(36) NOT NULL,
     type ENUM('EMAIL', 'SMS', 'PUSH') NOT NULL,
     message TEXT NOT NULL,
@@ -105,19 +117,4 @@ CREATE TABLE notifications (
     CONSTRAINT fk_notif_user FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_notif_status (status)
-);
-
--- =========================
--- 8. AUDIT_LOGS TABLE (Optional, for admin & reconciliation)
--- =========================
-CREATE TABLE audit_logs (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    actor_id CHAR(36) NOT NULL,
-    action VARCHAR(255) NOT NULL,
-    entity_name VARCHAR(255),
-    entity_id CHAR(36),
-    old_value TEXT,
-    new_value TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_actor (actor_id)
 );
