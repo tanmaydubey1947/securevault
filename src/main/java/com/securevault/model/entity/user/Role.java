@@ -1,4 +1,4 @@
-package com.securevault.entity.user;
+package com.securevault.model.entity.user;
 
 public enum Role {
 

@@ -1,9 +1,9 @@
 package com.securevault.util.rowMapper;
 
-import com.securevault.entity.user.AccountStatus;
-import com.securevault.entity.user.KycStatus;
-import com.securevault.entity.user.Role;
-import com.securevault.entity.user.User;
+import com.securevault.model.entity.user.AccountStatus;
+import com.securevault.model.entity.user.KycStatus;
+import com.securevault.model.entity.user.Role;
+import com.securevault.model.entity.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;

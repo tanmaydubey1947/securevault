@@ -1,4 +1,4 @@
-package com.securevault.dto;
+package com.securevault.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

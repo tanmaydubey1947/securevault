@@ -1,7 +1,7 @@
 package com.securevault.service.auth;
 
 import com.securevault.dao.UserDao;
-import com.securevault.entity.user.User;
+import com.securevault.model.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

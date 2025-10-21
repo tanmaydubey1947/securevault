@@ -1,6 +1,6 @@
 package com.securevault.dao;
 
-import com.securevault.entity.user.User;
+import com.securevault.model.entity.user.User;
 import com.securevault.util.rowMapper.UsersRowMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

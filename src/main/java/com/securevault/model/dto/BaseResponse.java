@@ -1,4 +1,4 @@
-package com.securevault.dto;
+package com.securevault.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponse {
-
-    private String errorCode;
-    private String errorMessage;
+public class BaseResponse extends ErrorResponse {
 }

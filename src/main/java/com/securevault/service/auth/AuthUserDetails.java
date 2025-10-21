@@ -1,6 +1,6 @@
 package com.securevault.service.auth;
 
-import com.securevault.entity.user.User;
+import com.securevault.model.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
