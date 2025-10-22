@@ -1,4 +1,4 @@
-package com.securevault.model.dto;
+package com.securevault.model.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public class AuthRequest {
 
-    private String fullName;
     private String email;
     private String password;
-    private String phoneNumber;
-    private String role;
 }
