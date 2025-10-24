@@ -30,6 +30,16 @@ public class UserServiceImpl implements UserService {
         return constructUserResponse(user);
     }
 
+    @Override
+    public UserResponse getUserDetails(UserRequest request) {
+        if(request.getEmail() == null || request.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email must be provided to fetch user details.");
+        }
+        User user = userDao.getUserByEmail(request.getEmail());
+        log.info("Fetched details for user with email: {}", user.getEmail());
+        return constructUserResponse(user);
+    }
+
 
     private User buildUserFromRequest(final UserRequest request) {
         return User.builder()
@@ -51,7 +61,7 @@ public class UserServiceImpl implements UserService {
         response.setRole(user.getRole().name());
         response.setAccountStatus(user.getAccountStatus().name());
         response.setKycStatus(user.getKycStatus().name());
-        response.setMessage("User registered successfully.");
+        response.setMessage("Successfully processed user details.");
         return response;
     }
 }

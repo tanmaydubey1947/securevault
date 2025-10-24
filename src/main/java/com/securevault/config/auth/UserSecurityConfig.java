@@ -42,6 +42,7 @@ public class UserSecurityConfig {
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/**").authenticated()
+                                .requestMatchers("/user/**").authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

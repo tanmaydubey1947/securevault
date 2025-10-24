@@ -7,4 +7,6 @@ public interface UserService {
 
     UserResponse register(UserRequest request);
 
+    UserResponse getUserDetails(UserRequest request);
+
 }

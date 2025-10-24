@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,20 @@ public class UserController {
     public ResponseEntity<BaseResponse> register(@RequestBody final UserRequest request) {
         log.info("Initiating User Registration...");
         final BaseResponse response = userService.register(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get user details")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "User details fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("getUserDetails")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<BaseResponse> getUserDetails(@RequestBody final UserRequest request) {
+        log.info("Initiating fetching user details...");
+        final BaseResponse response = userService.getUserDetails(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
