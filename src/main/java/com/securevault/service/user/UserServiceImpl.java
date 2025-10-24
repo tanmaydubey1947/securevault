@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 import static com.securevault.model.entity.user.AccountStatus.PENDING_VERIFICATION;
 import static com.securevault.model.entity.user.KycStatus.PENDING;
 
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
                 .role(Role.valueOf(request.getRole()))
                 .accountStatus(PENDING_VERIFICATION)
                 .kycStatus(PENDING)
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 

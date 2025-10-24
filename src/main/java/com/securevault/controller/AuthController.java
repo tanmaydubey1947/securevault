@@ -1,37 +1,40 @@
 package com.securevault.controller;
 
+import com.securevault.model.dto.BaseResponse;
+import com.securevault.model.dto.auth.AuthRequest;
+import com.securevault.service.auth.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
-    public static void main(String[] args) {
+    @Autowired private AuthService authService;
 
-//        Function<String, Integer> f = a -> a.length();
-//
-//        System.out.print(f.apply("abc"));
-//
-//        Consumer<Integer> c = System.out::print;
-//
-//        c.accept(4);
-//
-//        Supplier<Integer> s = () -> 4;
-//
-//
-//        System.out.print(s.get());
-
-        List<Integer> list = new ArrayList<>();
-        for(int i = 1;i<=1000;i++) {
-            list.add(i);
-        }
-
-        list.parallelStream().forEach(System.out::println);
+    @Operation(summary = "Generate Token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Token generated successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("authenticate")
+    public ResponseEntity<BaseResponse> authenticate(@RequestBody final AuthRequest request) {
+        log.info("Initiating token generation...");
+        final BaseResponse response = authService.authenticate(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
 
 }

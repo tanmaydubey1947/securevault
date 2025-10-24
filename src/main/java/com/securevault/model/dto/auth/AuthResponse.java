@@ -1,6 +1,7 @@
 package com.securevault.model.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.securevault.model.dto.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthResponse {
+public class AuthResponse extends BaseResponse {
 
     private String msg;
     private String token;
