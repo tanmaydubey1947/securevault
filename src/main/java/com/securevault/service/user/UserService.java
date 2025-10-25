@@ -9,4 +9,6 @@ public interface UserService {
 
     UserResponse getUserDetails(UserRequest request);
 
+    UserResponse verifyUser(String token);
+
 }

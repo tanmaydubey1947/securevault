@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -37,9 +34,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Get user details")
+    @Operation(summary = "Fetch user details")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "User details fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "User details fetched successfully"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
@@ -48,7 +45,20 @@ public class UserController {
     public ResponseEntity<BaseResponse> getUserDetails(@RequestBody final UserRequest request) {
         log.info("Initiating fetching user details...");
         final BaseResponse response = userService.getUserDetails(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Verify User Account")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User verification completed"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @GetMapping("verifyUser")
+    public ResponseEntity<BaseResponse> getUserDetails(@RequestParam final String token) {
+        log.info("Initiating user verification...");
+        final BaseResponse response = userService.verifyUser(token);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

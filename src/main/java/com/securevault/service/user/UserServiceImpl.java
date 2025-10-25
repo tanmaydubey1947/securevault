@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static com.securevault.model.entity.user.AccountStatus.ACTIVE;
 import static com.securevault.model.entity.user.AccountStatus.PENDING_VERIFICATION;
 import static com.securevault.model.entity.user.KycStatus.PENDING;
 
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
         User user = buildUserFromRequest(request);
         userDao.saveUser(user);
         log.info("Registered new user with email: {}", user.getEmail());
+
+        //TODO: Send a mail for user verification with token link
         return constructUserResponse(user);
     }
 
@@ -38,6 +41,15 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByEmail(request.getEmail());
         log.info("Fetched details for user with email: {}", user.getEmail());
         return constructUserResponse(user);
+    }
+
+    @Override
+    public UserResponse verifyUser(String token) {
+        String email = verifyTokenAndGetEmail(token);
+        userDao.updateAccountStatus(ACTIVE, email);
+        final UserResponse response = new UserResponse();
+        response.setMessage("User verification completed successfully.");
+        return response;
     }
 
 
@@ -63,5 +75,9 @@ public class UserServiceImpl implements UserService {
         response.setKycStatus(user.getKycStatus().name());
         response.setMessage("Successfully processed user details.");
         return response;
+    }
+
+    private String verifyTokenAndGetEmail(String token) {
+        return "";
     }
 }

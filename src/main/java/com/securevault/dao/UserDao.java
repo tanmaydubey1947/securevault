@@ -1,5 +1,6 @@
 package com.securevault.dao;
 
+import com.securevault.model.entity.user.AccountStatus;
 import com.securevault.model.entity.user.User;
 import com.securevault.util.rowMapper.UsersRowMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,16 @@ public class UserDao {
             log.info("User with email {} saved successfully.", user.getEmail());
         } else {
             throw new RuntimeException("Failed to save user with email " + user.getEmail());
+        }
+    }
+
+    public void updateAccountStatus(final AccountStatus status, final String email) {
+        final String sql = "UPDATE users SET account_status = ? WHERE email = ?";
+        int update = jdbcTemplate.update(sql, status.name(), email);
+        if (update > 0) {
+            log.info("User with email {} account status updated to {}.", email, status);
+        } else {
+            throw new RuntimeException("Failed to update account status for user with email " + email);
         }
     }
 
