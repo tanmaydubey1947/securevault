@@ -55,7 +55,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
     @GetMapping("verifyUser")
-    public ResponseEntity<BaseResponse> getUserDetails(@RequestParam final String token) {
+    public ResponseEntity<BaseResponse> verifyUser(@RequestParam final String token) {
         log.info("Initiating user verification...");
         final BaseResponse response = userService.verifyUser(token);
         return new ResponseEntity<>(response, HttpStatus.OK);

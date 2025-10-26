@@ -5,6 +5,7 @@ import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
+import com.securevault.service.auth.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,14 +23,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired private UserDao userDao;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private JwtService jwtService;
 
     @Override
     public UserResponse register(final UserRequest request) {
         User user = buildUserFromRequest(request);
         userDao.saveUser(user);
         log.info("Registered new user with email: {}", user.getEmail());
-
-        //TODO: Send a mail for user verification with token link
+        sendTokenToUser(user.getEmail());
         return constructUserResponse(user);
     }
 
@@ -44,9 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse verifyUser(String token) {
-        String email = verifyTokenAndGetEmail(token);
+    public UserResponse verifyUser(final String token) {
+        validateToken(token);
+        final String email = jwtService.extractUsername(token);
         userDao.updateAccountStatus(ACTIVE, email);
+        sendVerifiedMail(email);
         final UserResponse response = new UserResponse();
         response.setMessage("User verification completed successfully.");
         return response;
@@ -77,7 +80,24 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-    private String verifyTokenAndGetEmail(String token) {
-        return "";
+    private void validateToken(final String token) {
+        if(token == null || token.isEmpty()) {
+            throw new IllegalArgumentException("Verification token must be provided.");
+        }
+
+        if(jwtService.isTokenExpired(token)) {
+            throw new IllegalArgumentException("Verification token has expired.");
+        }
+    }
+
+    private void sendTokenToUser(String email) {
+        String token = jwtService.generateVerificationToken(email);
+        log.info("Sending verification email to {} with token: {}", email, token); //TODO: Need to remove
+        //TODO: Implement actual email sending logic here
+    }
+
+    private void sendVerifiedMail(String email) {
+        log.info("Sending account verified email to {}", email);
+        //TODO: Implement actual email sending logic here
     }
 }

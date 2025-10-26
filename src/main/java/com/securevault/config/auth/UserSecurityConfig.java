@@ -38,7 +38,7 @@ public class UserSecurityConfig {
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/auth/authenticate", "/auth/refreshToken").permitAll()
-                                .requestMatchers("/user/register").permitAll()
+                                .requestMatchers("/user/register", "/user/verifyUser").permitAll()
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/**").authenticated()
