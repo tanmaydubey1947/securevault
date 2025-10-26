@@ -14,16 +14,6 @@ CREATE TABLE users (
 );
 
 -- =========================
--- 1(a). USERS VERIFICATION TABLE
--- =========================
-CREATE TABLE users_verification (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id CHAR(36) NOT NULL,
-    otp VARCHAR(10) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- =========================
 -- 2. BANK_ACCOUNTS TABLE
 -- =========================
 CREATE TABLE bank_accounts (
