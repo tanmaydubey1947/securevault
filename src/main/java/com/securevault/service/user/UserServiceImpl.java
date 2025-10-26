@@ -1,6 +1,7 @@
 package com.securevault.service.user;
 
 import com.securevault.dao.UserDao;
+import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
 import com.securevault.model.entity.user.Role;
@@ -93,11 +94,23 @@ public class UserServiceImpl implements UserService {
     private void sendTokenToUser(String email) {
         String token = jwtService.generateVerificationToken(email);
         log.info("Sending verification email to {} with token: {}", email, token); //TODO: Need to remove
-        //TODO: Implement actual email sending logic here
+
+        final String message = "Please verify your account using the link: "
+                + "http://localhost:8080/verifyUser?token=" + token;
+
+        final NotificationRequest request = new NotificationRequest();
+        request.setSubject("Account Verification");
+        request.setMessage(message);
+        request.setRecipient(email);
+        //TODO: Send using RabbitMQ
     }
 
     private void sendVerifiedMail(String email) {
         log.info("Sending account verified email to {}", email);
-        //TODO: Implement actual email sending logic here
+        final NotificationRequest request = new NotificationRequest();
+        request.setSubject("Account Verified");
+        request.setMessage("Your account has been successfully verified.");
+        request.setRecipient(email);
+        //TODO: Send using RabbitMQ
     }
 }
