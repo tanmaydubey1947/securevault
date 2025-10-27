@@ -1,6 +1,7 @@
 package com.securevault.service.user;
 
 import com.securevault.dao.UserDao;
+import com.securevault.event.notification.producer.NotificationProducer;
 import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
     @Autowired private UserDao userDao;
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private JwtService jwtService;
+    @Autowired private NotificationProducer notificationProducer;
 
     @Override
     public UserResponse register(final UserRequest request) {
@@ -93,16 +95,17 @@ public class UserServiceImpl implements UserService {
 
     private void sendTokenToUser(String email) {
         String token = jwtService.generateVerificationToken(email);
-        log.info("Sending verification email to {} with token: {}", email, token); //TODO: Need to remove
 
-        final String message = "Please verify your account using the link: "
-                + "http://localhost:8080/verifyUser?token=" + token;
+        final String url = "http://localhost:8080/user/verifyUser?token=" + token;
+        log.info("Sending verification email to {} with token: {} and url: {}",
+                email, token, url); //TODO: Need to remove this log in production
+        final String message = "Please verify your account using the link: " + url;
 
         final NotificationRequest request = new NotificationRequest();
         request.setSubject("Account Verification");
         request.setMessage(message);
         request.setRecipient(email);
-        //TODO: Send using RabbitMQ
+        notificationProducer.processNotification(request);
     }
 
     private void sendVerifiedMail(String email) {
@@ -111,6 +114,6 @@ public class UserServiceImpl implements UserService {
         request.setSubject("Account Verified");
         request.setMessage("Your account has been successfully verified.");
         request.setRecipient(email);
-        //TODO: Send using RabbitMQ
+        notificationProducer.processNotification(request);
     }
 }

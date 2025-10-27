@@ -4,19 +4,21 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
+@ConditionalOnProperty( name = "rabbitmq.enabled", havingValue = "true")
 public class NotificationRabbitConfig {
 
-    @Value("{notifications.exchange}")
+    @Value("${notifications.exchange}")
     private String exchangeName;
 
-    @Value("{notifications.queue}")
+    @Value("${notifications.queue}")
     private String queueName;
 
-    @Value("{notifications.routing.key}")
+    @Value("${notifications.routing.key}")
     private String routingKey;
 
     @Bean

@@ -14,8 +14,8 @@ public class NotificationConsumer {
     @Autowired private NotificationService notificationService;
 
     @RabbitListener(queues = "${notifications.queue}")
-    public void processNotification(Object notificationMessage) {
+    public void processNotification(NotificationRequest notificationMessage) {
         log.info("Processing notification message: {}", notificationMessage);
-        notificationService.sendNotification((NotificationRequest) notificationMessage);
+        notificationService.sendNotification(notificationMessage);
     }
 }

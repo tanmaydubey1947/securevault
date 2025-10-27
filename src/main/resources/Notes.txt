@@ -1,0 +1,6 @@
+To Start RabbitMQ as a container: docker run -d --hostname rabbitmq-host --name rabbitmq \
+                                    -p 5672:5672 -p 15672:15672 \
+                                    rabbitmq:3-management
+To Access RabbitMQ Management UI: http://localhost:15672
+Default Username: guest
+Default Password: guest
