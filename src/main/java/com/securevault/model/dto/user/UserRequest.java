@@ -14,4 +14,7 @@ public class UserRequest {
     private String password;
     private String phoneNumber;
     private String role;
+    private int otp;
+    private String newPassword;
+    private String confirmPassword;
 }

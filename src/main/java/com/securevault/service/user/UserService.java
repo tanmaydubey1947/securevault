@@ -11,4 +11,8 @@ public interface UserService {
 
     UserResponse verifyUser(String token);
 
+    UserResponse generateResetToken(UserRequest request);
+
+    UserResponse resetCredentials(UserRequest request);
+
 }

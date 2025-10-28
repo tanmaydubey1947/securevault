@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse verifyUser(final String token) {
+    public UserResponse verifyUser(final String token) {//TODO: Check if user is already verified
         validateToken(token);
         final String email = jwtService.extractUsername(token);
         userDao.updateAccountStatus(ACTIVE, email);
@@ -56,6 +56,18 @@ public class UserServiceImpl implements UserService {
         final UserResponse response = new UserResponse();
         response.setMessage("User verification completed successfully.");
         return response;
+    }
+
+    @Override
+    public UserResponse generateResetToken(final UserRequest request) {
+        // Implementation for generating reset token
+        throw new UnsupportedOperationException("Generate reset token functionality is not implemented yet.");
+    }
+
+    @Override
+    public UserResponse resetCredentials(final UserRequest request) {
+        // Implementation for resetting user credentials
+        throw new UnsupportedOperationException("Reset credentials functionality is not implemented yet.");
     }
 
 
