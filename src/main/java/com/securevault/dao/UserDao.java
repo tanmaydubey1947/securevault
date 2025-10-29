@@ -54,4 +54,24 @@ public class UserDao {
         }
     }
 
+    public void savePasswordResetToken(final String email, final String token) {
+        final String sql = "INSERT INTO password_reset_tokens (email, token, created_at) VALUES (?, ?, NOW())";
+        final int update = jdbcTemplate.update(sql, email, token);
+        if (update > 0) {
+            log.info("Password reset token persisted for email: {}", email);
+        } else {
+            throw new RuntimeException("Failed to persist password reset token for email: " + email);
+        }
+    }
+
+    public void updatePassword(final String email, final String newPasswordHash) {
+        final String sql = "UPDATE users SET password_hash = ? WHERE email = ?";
+        final int update = jdbcTemplate.update(sql, newPasswordHash, email);
+        if (update > 0) {
+            log.info("Password updated successfully for email: {}", email);
+        } else {
+            throw new RuntimeException("Failed to update password for email: " + email);
+        }
+    }
+
 }

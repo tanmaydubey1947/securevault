@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void sendTokenToUser(String email) {
+    private void sendTokenToUser(final String email) {
         String token = jwtService.generateVerificationToken(email);
 
         final String url = "http://localhost:8080/user/verifyUser?token=" + token;
