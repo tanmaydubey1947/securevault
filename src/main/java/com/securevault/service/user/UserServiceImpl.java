@@ -60,8 +60,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse generateResetToken(final UserRequest request) {
-        // Implementation for generating reset token
-        throw new UnsupportedOperationException("Generate reset token functionality is not implemented yet.");
+        final String token = jwtService.generatePasswordResetToken(request.getEmail());
+        final String email = request.getEmail();
+        userDao.savePasswordResetToken(email, token);
+        log.info("Generated password reset token for user with email: {}", email);
+        sendPasswordResetToken(email, token);
+        final UserResponse response = new UserResponse();
+        response.setMessage("Password reset token generated successfully.");
+        return response;
     }
 
     @Override
@@ -120,11 +126,23 @@ public class UserServiceImpl implements UserService {
         notificationProducer.processNotification(request);
     }
 
-    private void sendVerifiedMail(String email) {
+    private void sendVerifiedMail(final String email) {
         log.info("Sending account verified email to {}", email);
         final NotificationRequest request = new NotificationRequest();
         request.setSubject("Account Verified");
         request.setMessage("Your account has been successfully verified.");
+        request.setRecipient(email);
+        notificationProducer.processNotification(request);
+    }
+
+    private void sendPasswordResetToken(final String email, final String token) {
+        log.info("Sending password reset email to {} with token: {}", email, token); //TODO: Remove in production
+        final String url = "http://localhost:8080/user/resetPassword?token=" + token;
+        final String message = "Please reset your password using the link: " + url;
+
+        final NotificationRequest request = new NotificationRequest();
+        request.setSubject("Password Reset");
+        request.setMessage(message);
         request.setRecipient(email);
         notificationProducer.processNotification(request);
     }

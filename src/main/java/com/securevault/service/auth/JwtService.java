@@ -25,6 +25,8 @@ public class JwtService {
     private int jwtExpiration;
     @Value("${jwt.verification.expiry}")
     private int jwtVerificationExpiry;
+    @Value("${jwt.reset.password.expiry}")
+    private int jwtResetPasswordExpiry;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -67,6 +69,11 @@ public class JwtService {
         return createVerificationToken(claims, username);
     }
 
+    public String generatePasswordResetToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
+        return createVerificationToken(claims, username);
+    }
+
     private String createToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -83,6 +90,16 @@ public class JwtService {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(new Date().getTime() + jwtVerificationExpiry * 1000L))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private String createPasswordResetToken(Map<String, Object> claims, String username) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(new Date().getTime() + jwtResetPasswordExpiry * 1000L))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

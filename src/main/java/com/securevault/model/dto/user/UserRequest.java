@@ -17,4 +17,5 @@ public class UserRequest {
     private int otp;
     private String newPassword;
     private String confirmPassword;
+    private String token;
 }
