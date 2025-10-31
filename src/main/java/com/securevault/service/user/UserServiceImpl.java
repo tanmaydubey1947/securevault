@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse generateResetToken(final UserRequest request) {
         final String token = jwtService.generatePasswordResetToken(request.getEmail());
         final String email = request.getEmail();
+        checkIfUserExists(email);
         userDao.savePasswordResetToken(email, token);
         log.info("Generated password reset token for user with email: {}", email);
         sendPasswordResetToken(email, token);
@@ -72,8 +73,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse resetCredentials(final UserRequest request) {
-        // Implementation for resetting user credentials
-        throw new UnsupportedOperationException("Reset credentials functionality is not implemented yet.");
+        validateResetRequest(request);
+        final String token = request.getToken();
+        final String email = jwtService.extractUsername(token);
+        final String passwordHash = passwordEncoder.encode(request.getNewPassword());
+        userDao.updatePassword(email, passwordHash);
+
+        final UserResponse response = new UserResponse();
+        response.setMessage("Password reset successfully.");
+        return response;
     }
 
 
@@ -145,5 +153,27 @@ public class UserServiceImpl implements UserService {
         request.setMessage(message);
         request.setRecipient(email);
         notificationProducer.processNotification(request);
+    }
+
+    private void checkIfUserExists(final String email) {
+        try {
+            final User user = userDao.getUserByEmail(email);
+            if(user == null) {
+                throw new IllegalArgumentException("No user found with email: " + email);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("No user found with email: " + email);
+        }
+    }
+
+    private void validateResetRequest(final UserRequest request) {
+        validateToken(request.getToken());
+
+        if(request.getNewPassword() == null || request.getNewPassword().isEmpty()) {
+            throw new IllegalArgumentException("New password must be provided.");
+        }
+        if(!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new IllegalArgumentException("New password and confirm password do not match.");
+        }
     }
 }
