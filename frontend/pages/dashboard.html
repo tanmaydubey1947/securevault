@@ -2,28 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - Wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <!-- Link external CSS -->
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-  <nav>
-    <h3 id="userName">WalletApp</h3>
+  <div class="dashboard-container">
+    <h2>Welcome, <span id="userName">Loading...</span></h2>
+    <p>Email: <span id="userEmail">Loading...</span></p>
+    <p>Phone Number: <span id="userPhone">Loading...</span></p>
+    <p>Account Status: <span id="accountStatus">Loading...</span></p>
+    <p>KYC Status: <span id="kycStatus">Loading...</span></p>
     <button id="logoutBtn">Logout</button>
-  </nav>
+  </div>
 
-  <section class="wallet-info">
-    <h2>Your Balance: <span id="balance">$0.00</span></h2>
-    <a href="send-money.html" class="btn">Send Money</a>
-  </section>
-
-  <section id="transactions">
-    <h3>Recent Transactions</h3>
-    <ul id="txList"></ul>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="../config.js"></script>
-  <script src="../js/api.js"></script>
   <script src="../js/dashboard.js"></script>
 </body>
 </html>
