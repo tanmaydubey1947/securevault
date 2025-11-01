@@ -61,5 +61,31 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "Generate Password Reset Token")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Reset token generated successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("generateResetToken")
+    public ResponseEntity<BaseResponse> generateResetToken(@RequestBody final UserRequest request) {
+        log.info("Initiating password reset token generation...");
+        final BaseResponse response = userService.generateResetToken(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Reset User Credentials")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Reset User Credentials Success"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("resetCredentials")
+    public ResponseEntity<BaseResponse> resetCredentials(@RequestBody final UserRequest request) {
+        log.info("Initiating credentials reset ...");
+        final BaseResponse response = userService.resetCredentials(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 }

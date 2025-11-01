@@ -59,15 +59,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse generateResetToken(final UserRequest request) {
-        final String token = jwtService.generatePasswordResetToken(request.getEmail());
+    public UserResponse generateResetToken(final UserRequest request) {//TODO: Same token can be used to reset multiple times within validity
         final String email = request.getEmail();
+        final String token = jwtService.generatePasswordResetToken(email);
         checkIfUserExists(email);
-        userDao.savePasswordResetToken(email, token);
+//        userDao.savePasswordResetToken(email, token);
         log.info("Generated password reset token for user with email: {}", email);
         sendPasswordResetToken(email, token);
         final UserResponse response = new UserResponse();
         response.setMessage("Password reset token generated successfully.");
+        notifyCredentialsReset(email);
         return response;
     }
 
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
         request.setSubject("Account Verification");
         request.setMessage(message);
         request.setRecipient(email);
-        notificationProducer.processNotification(request);
+        //TODO: notificationProducer.processNotification(request);
     }
 
     private void sendVerifiedMail(final String email) {
@@ -161,7 +162,7 @@ public class UserServiceImpl implements UserService {
             if(user == null) {
                 throw new IllegalArgumentException("No user found with email: " + email);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new IllegalArgumentException("No user found with email: " + email);
         }
     }
@@ -175,5 +176,14 @@ public class UserServiceImpl implements UserService {
         if(!request.getNewPassword().equals(request.getConfirmPassword())) {
             throw new IllegalArgumentException("New password and confirm password do not match.");
         }
+    }
+
+    private void notifyCredentialsReset(final String email) {
+        log.info("Notifying user {} about password reset", email);
+        final NotificationRequest request = new NotificationRequest();
+        request.setSubject("Password Reset Successful");
+        request.setMessage("Your password has been successfully reset.");
+        request.setRecipient(email);
+        //TODO: notificationProducer.processNotification(request);
     }
 }

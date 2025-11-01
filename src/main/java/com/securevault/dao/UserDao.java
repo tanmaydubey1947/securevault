@@ -14,7 +14,7 @@ public class UserDao {
 
     @Autowired private JdbcTemplate jdbcTemplate;
 
-    public User getUserByEmail(final String email) {
+    public User getUserByEmail(final String email) {//TODO: Required Error Handling if no user found
         final String sql = "SELECT * FROM users WHERE email = ?";
         return jdbcTemplate.queryForObject(sql, new UsersRowMapper(), email);
     }
