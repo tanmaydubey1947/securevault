@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Wallet</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <nav>
+    <h3 id="userName">WalletApp</h3>
+    <button id="logoutBtn">Logout</button>
+  </nav>
+
+  <section class="wallet-info">
+    <h2>Your Balance: <span id="balance">$0.00</span></h2>
+    <a href="send-money.html" class="btn">Send Money</a>
+  </section>
+
+  <section id="transactions">
+    <h3>Recent Transactions</h3>
+    <ul id="txList"></ul>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

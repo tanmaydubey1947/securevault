@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Send Money - Wallet</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <nav>
+    <a href="dashboard.html" class="btn">Back to Dashboard</a>
+  </nav>
+
+  <div class="form-container">
+    <h2>Send Money</h2>
+    <form id="sendMoneyForm">
+      <input type="text" id="recipient" placeholder="Recipient Email" required>
+      <input type="number" id="amount" placeholder="Amount" required>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/sendMoney.js"></script>
+</body>
+</html>
