@@ -147,9 +147,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private void sendPasswordResetToken(final String email, final String token) {
-        log.info("Sending password reset email to {} with token: {}", email, token); //TODO: Remove in production
-        final String url = "http://localhost:8080/user/resetPassword?token=" + token;
+        final String url = "http://localhost:5500/pages/reset-password.html?token=" + token;
         final String message = "Please reset your password using the link: " + url;
+        log.info("Password reset URL: {}", url); //TODO: Remove in production
 
         final NotificationRequest request = new NotificationRequest();
         request.setSubject("Password Reset");
