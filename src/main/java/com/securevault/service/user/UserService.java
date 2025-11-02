@@ -7,7 +7,7 @@ public interface UserService {
 
     UserResponse register(UserRequest request);
 
-    UserResponse getUserDetails(UserRequest request);
+    UserResponse getUserDetails(String email);
 
     UserResponse verifyUser(String token);
 

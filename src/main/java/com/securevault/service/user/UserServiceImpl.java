@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import static com.securevault.model.entity.user.AccountStatus.ACTIVE;
 import static com.securevault.model.entity.user.AccountStatus.PENDING_VERIFICATION;
 import static com.securevault.model.entity.user.KycStatus.PENDING;
+import static com.securevault.model.entity.user.Role.ROLE_USER;
 
 @Service
 @Slf4j
@@ -38,12 +39,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUserDetails(UserRequest request) {
-        if(request.getEmail() == null || request.getEmail().isEmpty()) {
+    public UserResponse getUserDetails(final String email) {
+        if(email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must be provided to fetch user details.");
         }
-        User user = userDao.getUserByEmail(request.getEmail());
-        log.info("Fetched details for user with email: {}", user.getEmail());
+        User user = userDao.getUserByEmail(email);
+        log.info("Fetched details for user with email: {}", email);
         return constructUserResponse(user);
     }
 
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
-                .role(Role.valueOf(request.getRole()))
+                .role(getRole(request.getRole()))
                 .accountStatus(PENDING_VERIFICATION)
                 .kycStatus(PENDING)
                 .createdAt(LocalDateTime.now())
@@ -106,6 +107,7 @@ public class UserServiceImpl implements UserService {
         response.setRole(user.getRole().name());
         response.setAccountStatus(user.getAccountStatus().name());
         response.setKycStatus(user.getKycStatus().name());
+        response.setPhoneNumber(user.getPhoneNumber());
         response.setMessage("Successfully processed user details.");
         return response;
     }
@@ -185,5 +187,12 @@ public class UserServiceImpl implements UserService {
         request.setMessage("Your password has been successfully reset.");
         request.setRecipient(email);
         //TODO: notificationProducer.processNotification(request);
+    }
+
+    private Role getRole(final String role) {
+        if(role != null) {
+            return Role.valueOf(role);
+        }
+        return ROLE_USER;
     }
 }

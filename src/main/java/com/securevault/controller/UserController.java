@@ -40,11 +40,11 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @PostMapping("getUserDetails")
+    @GetMapping("getUserDetails/{email}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BaseResponse> getUserDetails(@RequestBody final UserRequest request) {
+    public ResponseEntity<BaseResponse> getUserDetails(@PathVariable final String email) {
         log.info("Initiating fetching user details...");
-        final BaseResponse response = userService.getUserDetails(request);
+        final BaseResponse response = userService.getUserDetails(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

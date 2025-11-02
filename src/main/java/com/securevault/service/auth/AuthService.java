@@ -25,6 +25,7 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         if (authenticate.isAuthenticated()) {
             String token = jwtService.generateToken(request.getEmail());
+            log.info("User {} authenticated successfully.", request.getEmail());
             return buildAuthResponse(token);
         } else {
             throw new UsernameNotFoundException("Authentication Failure...");
