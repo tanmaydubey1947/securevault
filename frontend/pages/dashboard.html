@@ -8,20 +8,36 @@
 </head>
 <body>
   <div class="dashboard-container">
-    <h1 class="dashboard-title">User Dashboard</h1>
 
+    <!-- Top bar with logout -->
+    <div class="top-bar">
+      <h1 class="dashboard-title">User Dashboard</h1>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+
+    <!-- User Info Card -->
     <div class="user-card">
       <h2>Welcome, <span id="userName">Loading...</span></h2>
       <div class="user-info">
         <div class="info-row"><span>Email:</span> <span id="userEmail">Loading...</span></div>
         <div class="info-row"><span>Phone Number:</span> <span id="userPhone">Loading...</span></div>
         <div class="info-row"><span>Account Status:</span> <span id="accountStatus">Loading...</span></div>
-        <div class="info-row"><span>Available Balance:</span> <span id="availableAmount">Loading...</span></div>
-        <div class="info-row"><span>Pending Balance:</span> <span id="pendingAmount">Loading...</span></div>
         <div class="info-row"><span>KYC Status:</span> <span id="kycStatus">Loading...</span></div>
       </div>
-      <button id="logoutBtn">Logout</button>
+
+      <!-- Wallet Summary Boxes -->
+      <div class="wallet-summary">
+        <div class="wallet-box">
+          <h3>Available Balance</h3>
+          <p id="availableAmount">Loading...</p>
+        </div>
+        <div class="wallet-box pending">
+          <h3>Pending Balance</h3>
+          <p id="pendingAmount">Loading...</p>
+        </div>
+      </div>
     </div>
+
   </div>
 
   <script src="../js/dashboard.js"></script>
