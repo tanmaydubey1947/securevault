@@ -1,4 +1,4 @@
-package com.securevault.event.notification.producer;
+package com.securevault.event.notification;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

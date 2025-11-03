@@ -1,7 +1,7 @@
 package com.securevault.service.user;
 
 import com.securevault.dao.UserDao;
-import com.securevault.event.notification.producer.NotificationProducer;
+import com.securevault.event.notification.NotificationProducer;
 import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
