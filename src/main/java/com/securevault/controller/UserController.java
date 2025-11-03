@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping("getUserDetails/{email}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<BaseResponse> getUserDetails(@PathVariable final String email) {
-        log.info("Initiating fetching user details...");
+        log.info("Fetching user details...");
         final BaseResponse response = userService.getUserDetails(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

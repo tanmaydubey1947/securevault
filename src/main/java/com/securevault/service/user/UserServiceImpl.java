@@ -6,6 +6,7 @@ import com.securevault.exception.custom.UserNotFound;
 import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
+import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
 import com.securevault.service.auth.JwtService;
@@ -34,11 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse register(final UserRequest request) {
-        User user = buildUserFromRequest(request);
+        final User user = buildUserFromRequest(request);
         userDao.saveUser(user);
         log.info("Registered new user with email: {}", user.getEmail());
         sendTokenToUser(user.getEmail());
-        return constructUserResponse(user);
+
+        final UserResponse response = new UserResponse();
+        response.setMessage("Please verify your email to activate your account.");
+        return response;
     }
 
     @Override
@@ -47,8 +51,9 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Email must be provided to fetch user details.");
         }
         final User user = userDao.getUserByEmail(email);
+        final Wallet wallet = userDao.getWalletByEmail(email);
         log.info("Fetched details for user with email: {}", email);
-        return constructUserResponse(user);
+        return constructUserResponse(user, wallet);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class UserServiceImpl implements UserService {
         validateToken(token);
         final String email = jwtService.extractUsername(token);
         userDao.updateAccountStatus(ACTIVE, email);
+        userDao.openUserWallet(email);
         sendVerifiedMail(email);
         final UserResponse response = new UserResponse();
         response.setMessage("User verification completed successfully.");
@@ -103,7 +109,7 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    private UserResponse constructUserResponse(final User user) {
+    private UserResponse constructUserResponse(final User user, final Wallet wallet) {
         UserResponse response = new UserResponse();
         response.setFullName(user.getFullName());
         response.setEmail(user.getEmail());
@@ -111,6 +117,9 @@ public class UserServiceImpl implements UserService {
         response.setAccountStatus(user.getAccountStatus().name());
         response.setKycStatus(user.getKycStatus().name());
         response.setPhoneNumber(user.getPhoneNumber());
+        response.setAvailableAmount(wallet.getAvailableAmount());
+        response.setPendingAmount(wallet.getPendingAmount());
+        response.setWalletVersion(wallet.getVersion());
         response.setMessage("Successfully processed user details.");
         return response;
     }
@@ -189,7 +198,7 @@ public class UserServiceImpl implements UserService {
         request.setSubject("Password Reset Successful");
         request.setMessage("Your password has been successfully reset.");
         request.setRecipient(email);
-        //TODO: notificationProducer.processNotification(request);
+        notificationProducer.processNotification(request);
     }
 
     private Role getRole(final String role) {

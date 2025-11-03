@@ -4,17 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Dashboard</title>
-  <!-- Link external CSS -->
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
   <div class="dashboard-container">
-    <h2>Welcome, <span id="userName">Loading...</span></h2>
-    <p>Email: <span id="userEmail">Loading...</span></p>
-    <p>Phone Number: <span id="userPhone">Loading...</span></p>
-    <p>Account Status: <span id="accountStatus">Loading...</span></p>
-    <p>KYC Status: <span id="kycStatus">Loading...</span></p>
-    <button id="logoutBtn">Logout</button>
+    <h1 class="dashboard-title">User Dashboard</h1>
+
+    <div class="user-card">
+      <h2>Welcome, <span id="userName">Loading...</span></h2>
+      <div class="user-info">
+        <div class="info-row"><span>Email:</span> <span id="userEmail">Loading...</span></div>
+        <div class="info-row"><span>Phone Number:</span> <span id="userPhone">Loading...</span></div>
+        <div class="info-row"><span>Account Status:</span> <span id="accountStatus">Loading...</span></div>
+        <div class="info-row"><span>Available Balance:</span> <span id="availableAmount">Loading...</span></div>
+        <div class="info-row"><span>Pending Balance:</span> <span id="pendingAmount">Loading...</span></div>
+        <div class="info-row"><span>KYC Status:</span> <span id="kycStatus">Loading...</span></div>
+      </div>
+      <button id="logoutBtn">Logout</button>
+    </div>
   </div>
 
   <script src="../js/dashboard.js"></script>

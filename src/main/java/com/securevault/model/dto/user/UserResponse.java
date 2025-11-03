@@ -19,4 +19,7 @@ public class UserResponse extends BaseResponse {
     private String role;
     private String accountStatus;
     private String kycStatus;
+    private double availableAmount;
+    private double pendingAmount;
+    private int walletVersion;
 }

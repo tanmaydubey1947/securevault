@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('userEmail').textContent = user.email || 'N/A';
     document.getElementById('userPhone').textContent = user.phoneNumber || 'N/A';
     document.getElementById('accountStatus').textContent = user.accountStatus || 'N/A';
+    document.getElementById('availableAmount').textContent = user.availableAmount != null ? user.availableAmount : 'N/A';
+    document.getElementById('pendingAmount').textContent = user.pendingAmount != null ? user.pendingAmount : 'N/A';
     document.getElementById('kycStatus').textContent = user.kycStatus || 'N/A';
 
   } catch (error) {

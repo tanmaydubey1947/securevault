@@ -66,7 +66,6 @@ CREATE TABLE transactions (
     type ENUM('TOPUP', 'WITHDRAW', 'TRANSFER', 'RECEIVE', 'REFUND', 'ADJUSTMENT') NOT NULL,
     status ENUM('INITIATED', 'PENDING', 'SUCCESS', 'FAILED') NOT NULL DEFAULT 'INITIATED',
     amount DECIMAL(18,2) NOT NULL,
-    currency CHAR(3) NOT NULL DEFAULT 'INR',
     related_wallet_id CHAR(36) NULL,
     bank_ref VARCHAR(255) NULL,
     idempotency_key VARCHAR(255) NOT NULL,
