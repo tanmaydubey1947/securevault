@@ -4,11 +4,10 @@ import com.securevault.model.entity.user.AccountStatus;
 import com.securevault.model.entity.user.KycStatus;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.ResultSet;
 
-@Slf4j
 public class UsersRowMapper implements RowMapper<User> {
 
     @Override
@@ -24,8 +23,8 @@ public class UsersRowMapper implements RowMapper<User> {
             user.setAccountStatus(AccountStatus.fromString(rs.getString("account_status")));
             user.setRole(Role.fromString(rs.getString("role")));
             user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-        } catch (Exception e) {
-            log.error("Error mapping row to User object", e);
+        } catch (final Exception e) {
+            throw new RuntimeException("Error mapping row to User object", e);
         }
         return user;
     }

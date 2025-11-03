@@ -1,8 +1,10 @@
 package com.securevault.dao;
 
+import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.user.AccountStatus;
 import com.securevault.model.entity.user.User;
 import com.securevault.util.rowMapper.UsersRowMapper;
+import com.securevault.util.rowMapper.WalletRowMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,6 +56,16 @@ public class UserDao {
         }
     }
 
+    public void openUserWallet(final String email) {
+        final String sql = "Insert INTO wallets (user_email) VALUES (?)";
+        final int update = jdbcTemplate.update(sql, email);
+        if (update > 0) {
+            log.info("Wallet opened successfully for user with email: {}", email);
+        } else {
+            throw new RuntimeException("Failed to open wallet for user with email: " + email);
+        }
+    }
+
     public void savePasswordResetToken(final String email, final String token) {
         final String sql = "INSERT INTO password_reset_tokens (email, token, created_at) VALUES (?, ?, NOW())";
         final int update = jdbcTemplate.update(sql, email, token);
@@ -72,6 +84,11 @@ public class UserDao {
         } else {
             throw new RuntimeException("Failed to update password for email: " + email);
         }
+    }
+
+    public Wallet getWalletByEmail(final String email) {
+        final String sql = "SELECT * FROM wallets WHERE user_email = ?";
+        return jdbcTemplate.queryForObject(sql, new WalletRowMapper(), email);
     }
 
 }

@@ -2,6 +2,7 @@ package com.securevault.service.user;
 
 import com.securevault.dao.UserDao;
 import com.securevault.event.notification.NotificationProducer;
+import com.securevault.exception.custom.UserNotFound;
 import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ import static com.securevault.model.entity.user.Role.ROLE_USER;
 
 @Service
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired private UserDao userDao;
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if(email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email must be provided to fetch user details.");
         }
-        User user = userDao.getUserByEmail(email);
+        final User user = userDao.getUserByEmail(email);
         log.info("Fetched details for user with email: {}", email);
         return constructUserResponse(user);
     }
@@ -162,10 +165,10 @@ public class UserServiceImpl implements UserService {
         try {
             final User user = userDao.getUserByEmail(email);
             if(user == null) {
-                throw new IllegalArgumentException("No user found with email: " + email);
+                throw new UserNotFound("No user found with email: " + email);
             }
         } catch (final Exception e) {
-            throw new IllegalArgumentException("No user found with email: " + email);
+            throw new UserNotFound("No user found with email: " + email);
         }
     }
 

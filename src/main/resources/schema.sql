@@ -45,15 +45,16 @@ CREATE TABLE bank_accounts (
 -- =========================
 CREATE TABLE wallets (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id CHAR(36) NOT NULL,
-    currency CHAR(3) NOT NULL DEFAULT 'INR',
+    user_email VARCHAR(255) NOT NULL UNIQUE,
     available_amount DECIMAL(18,2) NOT NULL DEFAULT 0.00,
     pending_amount DECIMAL(18,2) NOT NULL DEFAULT 0.00,
     version BIGINT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_wallet_user FOREIGN KEY (user_id) REFERENCES users(id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    UNIQUE KEY unique_user_currency (user_id, currency)
+    CONSTRAINT fk_wallet_user_email
+        FOREIGN KEY (user_email)
+        REFERENCES users(email)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 -- =========================
