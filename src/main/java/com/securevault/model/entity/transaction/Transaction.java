@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Transactions {
+public class Transaction {
 
     private int transactionId;
-    private int walletId;
+    private String sender;
     private TransactionType transactionType;
     private TransactionStatus transactionStatus;
     private double amount;
-    private int relatedWalletId;
+    private String receiver;
     private String bankReference;
     private String idempotencyKey;
     private LocalDateTime createdAt;

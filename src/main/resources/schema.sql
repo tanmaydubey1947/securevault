@@ -62,11 +62,11 @@ CREATE TABLE wallets (
 -- =========================
 CREATE TABLE transactions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    wallet_id BIGINT NOT NULL,
+    sender VARCHAR(255) NOT NULL,
     type ENUM('TOPUP', 'WITHDRAW', 'TRANSFER', 'RECEIVE', 'REFUND', 'ADJUSTMENT') NOT NULL,
     status ENUM('PENDING', 'SUCCESS', 'FAILED', 'ACKNOWLEDGED', 'INITIATED') NOT NULL DEFAULT 'INITIATED',
     amount DECIMAL(18,2) NOT NULL,
-    related_wallet_id CHAR(36) NULL,
+    receiver VARCHAR(255) NULL,
     bank_ref VARCHAR(255) NULL,
     idempotency_key VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -99,8 +99,8 @@ CREATE TABLE ledger_entries (
 -- =========================
 CREATE TABLE idempotency_keys (
     idempotency_key VARCHAR(255) PRIMARY KEY,
-    user_id CHAR(36) NOT NULL,
-    transaction_id CHAR(36) NULL,
+    user_id BIGINT NOT NULL,
+    transaction_id BIGINT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_idempotency_user FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE ON UPDATE CASCADE
