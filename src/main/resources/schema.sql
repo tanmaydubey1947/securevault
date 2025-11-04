@@ -62,9 +62,9 @@ CREATE TABLE wallets (
 -- =========================
 CREATE TABLE transactions (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    wallet_id CHAR(36) NOT NULL,
+    wallet_id BIGINT NOT NULL,
     type ENUM('TOPUP', 'WITHDRAW', 'TRANSFER', 'RECEIVE', 'REFUND', 'ADJUSTMENT') NOT NULL,
-    status ENUM('INITIATED', 'PENDING', 'SUCCESS', 'FAILED') NOT NULL DEFAULT 'INITIATED',
+    status ENUM('PENDING', 'SUCCESS', 'FAILED', 'ACKNOWLEDGED', 'INITIATED') NOT NULL DEFAULT 'INITIATED',
     amount DECIMAL(18,2) NOT NULL,
     related_wallet_id CHAR(36) NULL,
     bank_ref VARCHAR(255) NULL,

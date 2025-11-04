@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -11,11 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Transactions {
 
-    private Long transactionId;
-    private Long accountId;
-    private Double amount;
-    private String transactionType; // e.g., "DEPOSIT", "WITHDRAWAL", "TRANSFER"
-    private String description;
-    private String timestamp;
+    private int transactionId;
+    private int walletId;
+    private TransactionType transactionType;
+    private TransactionStatus transactionStatus;
+    private double amount;
+    private int relatedWalletId;
+    private String bankReference;
+    private String idempotencyKey;
+    private LocalDateTime createdAt;
 
 }
