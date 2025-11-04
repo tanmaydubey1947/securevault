@@ -98,9 +98,8 @@ CREATE TABLE ledger_entries (
 -- 6. IDEMPOTENCY_KEYS TABLE
 -- =========================
 CREATE TABLE idempotency_keys (
-    idempotency_key BIGINT PRIMARY KEY AUTO_INCREMENT,
+    idempotency_key VARCHAR(255) PRIMARY KEY,
     user_id CHAR(36) NOT NULL,
-    request_hash VARCHAR(255) NOT NULL,
     transaction_id CHAR(36) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_idempotency_user FOREIGN KEY (user_id) REFERENCES users(id)
