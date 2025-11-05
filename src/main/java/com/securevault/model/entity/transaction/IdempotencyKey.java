@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class IdempotencyKey {
 
     private String idempotencyKey;
-    private int userId;
+    private String userEmail;
     private int transactionId;
     private LocalDateTime createdAt;
 }

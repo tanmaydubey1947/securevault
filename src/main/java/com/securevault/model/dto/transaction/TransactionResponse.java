@@ -1,6 +1,6 @@
 package com.securevault.model.dto.transaction;
 
-
+import com.securevault.model.dto.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionResponse {
+public class TransactionResponse extends BaseResponse {
 
     private Long transactionId;
     private Long accountId;

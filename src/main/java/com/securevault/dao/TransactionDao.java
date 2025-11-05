@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -16,8 +15,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class TransactionDao {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    @Autowired private JdbcTemplate jdbcTemplate;
 
     public void logTransactionWithLedgerAndIdempotency(final Transaction transaction,
                                                        final LedgerEntry debitEntry,
@@ -26,14 +24,14 @@ public class TransactionDao {
 
         final String txnSql = """
                     INSERT INTO transactions (
-                        wallet_id, type, status, amount, related_wallet_id, bank_ref, idempotency_key, created_at
+                        sender, type, status, amount, receiver, bank_ref, idempotency_key, created_at
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        final KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(txnSql, RETURN_GENERATED_KEYS);
+            final PreparedStatement ps = connection.prepareStatement(txnSql, RETURN_GENERATED_KEYS);
             ps.setString(1, transaction.getSender());
             ps.setString(2, transaction.getTransactionType().name());
             ps.setString(3, transaction.getTransactionStatus().name());
@@ -72,13 +70,13 @@ public class TransactionDao {
 
         final String idempotencySql = """
                     INSERT INTO idempotency_keys (
-                        idempotency_key, user_id, transaction_id, created_at
+                        idempotency_key, user_email, transaction_id, created_at
                     ) VALUES (?, ?, ?, ?)
                 """;
 
         jdbcTemplate.update(idempotencySql,
                 idempotency.getIdempotencyKey(),
-                idempotency.getUserId(),
+                idempotency.getUserEmail(),
                 transactionId,
                 Timestamp.from(Instant.now())
         );

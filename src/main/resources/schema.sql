@@ -99,10 +99,10 @@ CREATE TABLE ledger_entries (
 -- =========================
 CREATE TABLE idempotency_keys (
     idempotency_key VARCHAR(255) PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
     transaction_id BIGINT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_idempotency_user FOREIGN KEY (user_id) REFERENCES users(id)
+    CONSTRAINT fk_idempotency_user FOREIGN KEY (user_email) REFERENCES users (email)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
