@@ -107,7 +107,6 @@ public class UserDao {
             throw new RuntimeException("Insufficient balance or concurrent modification");
         }
 
-        // Step 3: Get receiver's wallet version
         final Wallet receiver = jdbcTemplate.queryForObject(
                 "SELECT id, wallet_version FROM wallets WHERE user_email = ?",
                 new WalletRowMapper(), receiverEmailId);
