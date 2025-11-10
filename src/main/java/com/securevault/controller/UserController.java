@@ -38,13 +38,12 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User details fetched successfully"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
-            @ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @GetMapping("getUserDetails/{email}")
+    @GetMapping("getUserDetails")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BaseResponse> getUserDetails(@PathVariable final String email) {
+    public ResponseEntity<BaseResponse> getUserDetails() {
         log.info("Fetching user details...");
-        final BaseResponse response = userService.getUserDetails(email);
+        final BaseResponse response = userService.getUserDetails();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -52,7 +51,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User verification completed"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
-            @ApiResponse(responseCode = "400", description = "Bad request")
     })
     @GetMapping("verifyUser")
     public ResponseEntity<BaseResponse> verifyUser(@RequestParam final String token) {

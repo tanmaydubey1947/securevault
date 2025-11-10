@@ -9,9 +9,13 @@ import com.securevault.model.dto.user.UserResponse;
 import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
+import com.securevault.service.auth.AuthUserDetails;
 import com.securevault.service.auth.JwtService;
+import com.securevault.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,10 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUserDetails(final String email) {
-        if(email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("Email must be provided to fetch user details.");
-        }
+    public UserResponse getUserDetails() {
+        final String email = Util.INSTANCE.getCurrentUsername();
         final User user = userDao.getUserByEmail(email);
         final Wallet wallet = userDao.getWalletByEmail(email);
         log.info("Fetched details for user with email: {}", email);
