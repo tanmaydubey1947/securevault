@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     // Fetch user info from your backend API
-    const response = await fetch(`http://localhost:8080/user/getUserDetails/${email}`, {
+    const response = await fetch(`http://localhost:8080/user/getUserDetails`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
