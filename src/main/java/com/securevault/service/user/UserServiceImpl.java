@@ -2,20 +2,17 @@ package com.securevault.service.user;
 
 import com.securevault.dao.UserDao;
 import com.securevault.event.notification.NotificationProducer;
-import com.securevault.exception.custom.UserNotFound;
+import com.securevault.exception.custom.UserNotFoundException;
 import com.securevault.model.dto.notification.NotificationRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
 import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
-import com.securevault.service.auth.AuthUserDetails;
 import com.securevault.service.auth.JwtService;
 import com.securevault.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -176,10 +173,10 @@ public class UserServiceImpl implements UserService {
         try {
             final User user = userDao.getUserByEmail(email);
             if(user == null) {
-                throw new UserNotFound("No user found with email: " + email);
+                throw new UserNotFoundException("No user found with email: " + email);
             }
         } catch (final Exception e) {
-            throw new UserNotFound("No user found with email: " + email);
+            throw new UserNotFoundException("No user found with email: " + email);
         }
     }
 

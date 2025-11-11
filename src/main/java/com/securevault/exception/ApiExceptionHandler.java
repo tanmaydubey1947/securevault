@@ -1,5 +1,7 @@
 package com.securevault.exception;
 
+import com.securevault.exception.custom.ConcurrentWalletUpdateException;
+import com.securevault.exception.custom.InsufficientBalanceException;
 import com.securevault.exception.payload.ExceptionMessage;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,26 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ApiExceptionHandler {
+
+    @ExceptionHandler(ConcurrentWalletUpdateException.class)
+    public ResponseEntity<ExceptionMessage> handleConcurrentWalletUpdateException(ConcurrentWalletUpdateException ex) {
+        log.error("Unexpected Exception Occurred: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionMessage.builder()
+                        .msg(ex.getMessage())
+                        .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .build());
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ExceptionMessage> handleInsufficientBalanceException(InsufficientBalanceException ex) {
+        log.error("Unexpected Exception Occurred: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionMessage.builder()
+                        .msg(ex.getMessage())
+                        .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .build());
+    }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionMessage> handleRuntimeException(Exception ex) {

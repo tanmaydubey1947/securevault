@@ -7,6 +7,7 @@ import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.transaction.IdempotencyKey;
 import com.securevault.model.entity.transaction.LedgerEntry;
 import com.securevault.model.entity.transaction.Transaction;
+import com.securevault.model.entity.transaction.TransactionStatus;
 import com.securevault.util.rowMapper.WalletRowMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+import static com.securevault.model.entity.transaction.TransactionStatus.SUCCESS;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 @Repository
@@ -30,17 +32,17 @@ public class TransactionDao {
     @Autowired private JdbcTemplate jdbcTemplate;
 
     private static final String SELECT_WALLET_SQL =
-            "SELECT id, balance, wallet_version FROM wallets WHERE user_email = ?";
+            "SELECT * FROM wallets WHERE user_email = ?";
     private static final String UPDATE_WALLET_SQL =
-            "UPDATE wallets SET balance = balance + ?, wallet_version = wallet_version + 1 " +
-                    "WHERE user_email = ? AND wallet_version = ?";
+            "UPDATE wallets SET available_amount = available_amount + ?, version = version + 1 " +
+                    "WHERE user_email = ? AND version = ?";
     private static final String INSERT_TRANSACTION_SQL = """
             INSERT INTO transactions (
-                sender, type, status, trxAmount, receiver, bank_ref, idempotency_key, created_at
+                sender, type, status, amount, receiver, bank_ref, idempotency_key, created_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
-    public int transferToWallet(final Transaction transaction) throws Exception {
+    public int sendToWallet(final Transaction transaction) throws RuntimeException {
 
         final String sender = transaction.getSender();
         final String receiver = transaction.getReceiver();
@@ -65,6 +67,7 @@ public class TransactionDao {
             throw new ConcurrentWalletUpdateException("Concurrent modification on Receiver's Wallet");
         }
 
+        transaction.setTransactionStatus(SUCCESS);
         int txnId = logTransactions(transaction);
         log.info("Transfer successful: sender={}, receiver={}, amount={}, txnId={}",
                 sender, receiver, trxAmount, txnId);
@@ -72,7 +75,7 @@ public class TransactionDao {
         return txnId;
     }
 
-    private Wallet getWallet(final String userEmail) throws Exception {
+    private Wallet getWallet(final String userEmail) throws WalletNotFoundException {
         try {
             return jdbcTemplate.queryForObject(SELECT_WALLET_SQL, new WalletRowMapper(), userEmail);
         } catch (EmptyResultDataAccessException e) {

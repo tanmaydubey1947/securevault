@@ -2,7 +2,6 @@ package com.securevault.controller;
 
 import com.securevault.model.dto.BaseResponse;
 import com.securevault.model.dto.transaction.TransactionRequest;
-import com.securevault.model.dto.user.UserRequest;
 import com.securevault.service.transaction.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +30,11 @@ public class TransactionController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @PostMapping("register")
-    public ResponseEntity<BaseResponse> register(@RequestBody final TransactionRequest request) {
-        log.info("Initiating User Registration...");
-        final BaseResponse response = transactionService.processTransaction(request);
+    @PostMapping("sendToWallet")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<BaseResponse> sendToWallet(@RequestBody final TransactionRequest request) {
+        log.info("Initiating send to wallet...");
+        final BaseResponse response = transactionService.sendToWallet(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

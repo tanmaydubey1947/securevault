@@ -5,7 +5,7 @@ import com.securevault.model.dto.transaction.TransactionResponse;
 
 public interface TransactionService {
 
-    TransactionResponse processTransaction(TransactionRequest transactionRequest);
+    TransactionResponse sendToWallet(TransactionRequest transactionRequest);
 
 
 }
