@@ -91,32 +91,4 @@ public class UserDao {
         return jdbcTemplate.queryForObject(sql, new WalletRowMapper(), email);
     }
 
-    public void transferToWallet(final String senderEmailId, final String receiverEmailId, final double amount) {
-
-        final Wallet sender = jdbcTemplate.queryForObject(
-                "SELECT id, balance, wallet_version FROM wallets WHERE user_email = ?",
-                new WalletRowMapper(), senderEmailId);
-
-        final int updatedRows = jdbcTemplate.update("""
-        UPDATE wallets
-        SET balance = balance - ?, wallet_version = wallet_version + 1
-        WHERE user_email = ? AND balance >= ? AND wallet_version = ?""",
-                amount, senderEmailId, amount, sender.getVersion());
-
-        if (updatedRows == 0) {
-            throw new RuntimeException("Insufficient balance or concurrent modification");
-        }
-
-        final Wallet receiver = jdbcTemplate.queryForObject(
-                "SELECT id, wallet_version FROM wallets WHERE user_email = ?",
-                new WalletRowMapper(), receiverEmailId);
-
-        jdbcTemplate.update("""
-        UPDATE wallets
-        SET balance = balance + ?, wallet_version = wallet_version + 1
-        WHERE user_email = ? AND wallet_version = ?""",
-                amount, receiverEmailId, receiver.getVersion());
-
-    }
-
 }

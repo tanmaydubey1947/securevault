@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionRequest {
 
-    private Long accountId;
+    private String senderMail;
+    private String receiverMail;
     private Double amount;
     private String transactionType; // e.g., "DEPOSIT", "WITHDRAWAL", "TRANSFER"
     private String description;

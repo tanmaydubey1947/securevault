@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TransactionResponse extends BaseResponse {
 
-    private Long transactionId;
+    private int transactionId;
     private Long accountId;
     private Double amount;
     private String transactionType; // e.g., "DEPOSIT", "WITHDRAWAL", "TRANSFER"

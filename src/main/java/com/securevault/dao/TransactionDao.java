@@ -1,27 +1,107 @@
 package com.securevault.dao;
 
+import com.securevault.exception.custom.ConcurrentWalletUpdateException;
+import com.securevault.exception.custom.InsufficientBalanceException;
+import com.securevault.exception.custom.WalletNotFoundException;
+import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.transaction.IdempotencyKey;
 import com.securevault.model.entity.transaction.LedgerEntry;
 import com.securevault.model.entity.transaction.Transaction;
+import com.securevault.util.rowMapper.WalletRowMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+@Repository
+@Slf4j
 public class TransactionDao {
 
     @Autowired private JdbcTemplate jdbcTemplate;
 
+    private static final String SELECT_WALLET_SQL =
+            "SELECT id, balance, wallet_version FROM wallets WHERE user_email = ?";
+    private static final String UPDATE_WALLET_SQL =
+            "UPDATE wallets SET balance = balance + ?, wallet_version = wallet_version + 1 " +
+                    "WHERE user_email = ? AND wallet_version = ?";
+    private static final String INSERT_TRANSACTION_SQL = """
+            INSERT INTO transactions (
+                sender, type, status, trxAmount, receiver, bank_ref, idempotency_key, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """;
+
+    public int transferToWallet(final Transaction transaction) throws Exception {
+
+        final String sender = transaction.getSender();
+        final String receiver = transaction.getReceiver();
+        final double trxAmount = transaction.getAmount();
+
+        final Wallet senderWallet = getWallet(sender);
+        final Wallet receiverWallet = getWallet(receiver);
+
+        if (senderWallet.getAvailableAmount() < trxAmount) {
+            throw new InsufficientBalanceException("Insufficient balance in sender's wallet");
+        }
+
+        int senderUpdated = jdbcTemplate.update(
+                UPDATE_WALLET_SQL, -trxAmount, sender, senderWallet.getVersion());
+        if (senderUpdated == 0) {
+            throw new ConcurrentWalletUpdateException("Concurrent modification on Sender's Wallet");
+        }
+
+        int receiverUpdated = jdbcTemplate.update(
+                UPDATE_WALLET_SQL, trxAmount, receiver, receiverWallet.getVersion());
+        if (receiverUpdated == 0) {
+            throw new ConcurrentWalletUpdateException("Concurrent modification on Receiver's Wallet");
+        }
+
+        int txnId = logTransactions(transaction);
+        log.info("Transfer successful: sender={}, receiver={}, amount={}, txnId={}",
+                sender, receiver, trxAmount, txnId);
+
+        return txnId;
+    }
+
+    private Wallet getWallet(final String userEmail) throws Exception {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_WALLET_SQL, new WalletRowMapper(), userEmail);
+        } catch (EmptyResultDataAccessException e) {
+            throw new WalletNotFoundException("Wallet not found for user: " + userEmail);
+        }
+    }
+
+    private int logTransactions(final Transaction transaction) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(INSERT_TRANSACTION_SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, transaction.getSender());
+            ps.setString(2, transaction.getTransactionType().name());
+            ps.setString(3, transaction.getTransactionStatus().name());
+            ps.setDouble(4, transaction.getAmount());
+            ps.setString(5, transaction.getReceiver());
+            ps.setString(6, transaction.getBankReference());
+            ps.setString(7, transaction.getIdempotencyKey());
+            ps.setTimestamp(8, Timestamp.from(Instant.now()));
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().intValue();
+    }
+
     public void logTransactionWithLedgerAndIdempotency(final Transaction transaction,
                                                        final LedgerEntry debitEntry,
                                                        final LedgerEntry creditEntry,
-                                                       final IdempotencyKey idempotency) {
+                                                       final IdempotencyKey idempotency) { //TODO: Check in future how to handle this
 
         final String txnSql = """
                     INSERT INTO transactions (
