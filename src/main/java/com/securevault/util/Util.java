@@ -9,7 +9,7 @@ public enum Util {
 
     INSTANCE;
 
-    public String getCurrentUsername() {
+    public String getCurrentEmail() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || auth.getPrincipal() == null) {
             throw new RuntimeException("Unauthenticated");

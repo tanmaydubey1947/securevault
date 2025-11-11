@@ -5,6 +5,7 @@ import com.securevault.exception.custom.InsufficientBalanceException;
 import com.securevault.model.dto.transaction.TransactionRequest;
 import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.model.entity.transaction.Transaction;
+import com.securevault.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,11 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         final Transaction transaction = new Transaction();
-        transaction.setSender(request.getSenderMail());
+        transaction.setSender(Util.INSTANCE.getCurrentEmail());
         transaction.setReceiver(request.getReceiverMail());
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType(TRANSFER);
-        transaction.setBankReference(request.getDescription());
+        transaction.setBankReference("Send To Wallet");
         transaction.setIdempotencyKey(UUID.randomUUID().toString());
         int trxId = dao.sendToWallet(transaction);
         final TransactionResponse response = new TransactionResponse();

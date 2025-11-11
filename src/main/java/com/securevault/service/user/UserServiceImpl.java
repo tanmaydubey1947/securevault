@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserDetails() {
-        final String email = Util.INSTANCE.getCurrentUsername();
+        final String email = Util.INSTANCE.getCurrentEmail();
         final User user = userDao.getUserByEmail(email);
         final Wallet wallet = userDao.getWalletByEmail(email);
         log.info("Fetched details for user with email: {}", email);
