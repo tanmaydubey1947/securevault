@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Dashboard</title>
   <link rel="stylesheet" href="../css/dashboard.css">
 </head>
+
 <body>
   <div class="dashboard-container">
 
@@ -36,10 +38,30 @@
           <p id="pendingAmount">Loading...</p>
         </div>
       </div>
+
+      <div class="send-to-wallet">
+        <h2>Send To Wallet</h2>
+        <form id="send-wallet-box">
+          <input type="email" id="receiverEmail" placeholder="Receiver Email" required>
+          <label for="totalAmt">Total Amount</label>
+          <input 
+            type="number" 
+            id="totalAmt" 
+            name="totalAmt" 
+            step="0.01" 
+            min="0" 
+            inputmode="decimal"
+            placeholder="0.00"
+            aria-label="Total Amount in dollars">          
+          <button type="submit">Send</button>
+        </form>
+      </div>
+
     </div>
 
   </div>
 
   <script src="../js/dashboard.js"></script>
 </body>
+
 </html>
