@@ -31,7 +31,6 @@ public class TransactionController {
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
     @PostMapping("sendToWallet")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<BaseResponse> sendToWallet(@RequestBody final TransactionRequest request) {
         log.info("Initiating send to wallet...");
         final BaseResponse response = transactionService.sendToWallet(request);
