@@ -7,5 +7,7 @@ public interface TransactionService {
 
     TransactionResponse sendToWallet(TransactionRequest transactionRequest);
 
+    TransactionResponse sendToBank(TransactionRequest transactionRequest);
+
 
 }

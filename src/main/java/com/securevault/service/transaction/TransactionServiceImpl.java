@@ -42,4 +42,9 @@ public class TransactionServiceImpl implements TransactionService {
         response.setTransactionId(trxId);
         return response;
     }
+
+    @Override
+    public TransactionResponse sendToBank(TransactionRequest transactionRequest) {
+        return null;
+    }
 }
