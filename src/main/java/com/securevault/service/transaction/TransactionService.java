@@ -9,5 +9,6 @@ public interface TransactionService {
 
     TransactionResponse sendToBank(TransactionRequest transactionRequest);
 
+    TransactionResponse addToWallet(TransactionRequest transactionRequest);
 
 }

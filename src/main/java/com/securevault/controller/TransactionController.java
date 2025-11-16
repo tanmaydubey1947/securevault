@@ -37,7 +37,18 @@ public class TransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @Operation(summary = "Send to bank")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "User transaction successful"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("sendToBank")
+    public ResponseEntity<BaseResponse> sendToBank(@RequestBody final TransactionRequest request) {
+        log.info("Initiating send to bank...");
+        final BaseResponse response = transactionService.sendToBank(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @Operation(summary = "Send to bank")
     @ApiResponses({
@@ -45,9 +56,9 @@ public class TransactionController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @PostMapping("sendToWallet")
-    public ResponseEntity<BaseResponse> sendToBank(@RequestBody final TransactionRequest request) {
-        log.info("Initiating send to bank...");
+    @PostMapping("addToWallet")
+    public ResponseEntity<BaseResponse> addToWallet(@RequestBody final TransactionRequest request) {
+        log.info("Initiating add money to wallet...");
         final BaseResponse response = transactionService.sendToBank(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

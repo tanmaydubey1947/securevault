@@ -44,7 +44,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse sendToBank(TransactionRequest transactionRequest) {
+    public TransactionResponse sendToBank(final TransactionRequest transactionRequest) {
+        return null;
+    }
+
+    @Override
+    public TransactionResponse addToWallet(final TransactionRequest transactionRequest) {
         return null;
     }
 }
