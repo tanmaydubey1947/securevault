@@ -94,6 +94,11 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    @Override
+    public UserResponse getUserTransactions() {
+        return null;
+    }
+
 
     private User buildUserFromRequest(final UserRequest request) {
         return User.builder()

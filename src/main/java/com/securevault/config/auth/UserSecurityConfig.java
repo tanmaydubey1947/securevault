@@ -42,6 +42,8 @@ public class UserSecurityConfig {
                                 .requestMatchers("/user/register", "/user/verifyUser", "/user/resetCredentials",
                                 "/user/generateResetToken").permitAll()
                                 .requestMatchers("/transaction/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/transaction/getAllTransactions/**").hasRole("ADMIN")
+                                .requestMatchers("/user/getUserTransactions").hasRole("USER")
                                 .requestMatchers("/user/getUserDetails").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/error").permitAll()

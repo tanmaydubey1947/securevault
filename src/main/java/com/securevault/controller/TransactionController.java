@@ -10,11 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/transaction")
@@ -60,6 +56,18 @@ public class TransactionController {
     public ResponseEntity<BaseResponse> addToWallet(@RequestBody final TransactionRequest request) {
         log.info("Initiating add money to wallet...");
         final BaseResponse response = transactionService.sendToBank(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Fetch all transactions")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "All transactions fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
+    @GetMapping("getAllTransactions")
+    public ResponseEntity<BaseResponse> getAllTransactions() { //TODO: Implement Pagination and Filtering
+        log.info("Fetching all transaction details...");
+        final BaseResponse response = transactionService.getAllTransactions();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -52,4 +52,9 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponse addToWallet(final TransactionRequest transactionRequest) {
         return null;
     }
+
+    @Override
+    public TransactionResponse getAllTransactions() {
+        return null;
+    }
 }

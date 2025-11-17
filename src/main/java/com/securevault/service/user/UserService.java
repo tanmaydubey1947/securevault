@@ -15,4 +15,6 @@ public interface UserService {
 
     UserResponse resetCredentials(UserRequest request);
 
+    UserResponse getUserTransactions();
+
 }

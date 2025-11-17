@@ -83,5 +83,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "Fetch user transactions")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User transactions fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
+    @GetMapping("getUserTransactions")
+    public ResponseEntity<BaseResponse> getUserTransactions() {
+        log.info("Fetching user transaction details...");
+        final BaseResponse response = userService.getUserTransactions();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 }
