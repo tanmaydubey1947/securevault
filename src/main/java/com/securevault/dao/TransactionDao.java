@@ -8,6 +8,7 @@ import com.securevault.model.entity.transaction.IdempotencyKey;
 import com.securevault.model.entity.transaction.LedgerEntry;
 import com.securevault.model.entity.transaction.Transaction;
 import com.securevault.model.entity.transaction.TransactionStatus;
+import com.securevault.util.rowMapper.TransactionRowMapper;
 import com.securevault.util.rowMapper.WalletRowMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,11 @@ public class TransactionDao {
                 sender, receiver, trxAmount, txnId);
 
         return txnId;
+    }
+
+    public Transaction getAllTransactions() {
+        final String query = "SELECT * FROM transactions";
+        return jdbcTemplate.queryForObject(query, new TransactionRowMapper());
     }
 
     private Wallet getWallet(final String userEmail) throws WalletNotFoundException {

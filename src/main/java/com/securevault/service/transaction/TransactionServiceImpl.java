@@ -54,7 +54,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse getAllTransactions() {
-        return null;
+    public TransactionResponse getAllTransactions() { //TODO: Implement pagination and filtering with mapper
+        final Transaction trxns = dao.getAllTransactions();
+        final TransactionResponse response = new TransactionResponse();
+        response.setTransactionId(trxns.getTransactionId());
+        return response;
     }
 }
