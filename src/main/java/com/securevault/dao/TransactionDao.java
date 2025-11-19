@@ -22,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 import static com.securevault.model.entity.transaction.TransactionStatus.SUCCESS;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
@@ -76,9 +77,9 @@ public class TransactionDao {
         return txnId;
     }
 
-    public Transaction getAllTransactions() {
+    public List<Transaction> getAllTransactions() {
         final String query = "SELECT * FROM transactions";
-        return jdbcTemplate.queryForObject(query, new TransactionRowMapper());
+        return jdbcTemplate.query(query, new TransactionRowMapper());
     }
 
     private Wallet getWallet(final String userEmail) throws WalletNotFoundException {

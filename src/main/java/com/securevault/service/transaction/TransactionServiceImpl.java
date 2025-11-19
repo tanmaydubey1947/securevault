@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.securevault.model.entity.transaction.TransactionType.TRANSFER;
@@ -26,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public TransactionResponse sendToWallet(final TransactionRequest request) {
 
-        if(request.getAmount() <= 0){
+        if (request.getAmount() <= 0) {
             throw new InsufficientBalanceException("Transfer amount must be greater than zero");
         }
 
@@ -54,10 +55,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse getAllTransactions() { //TODO: Implement pagination and filtering with mapper
-        final Transaction trxns = dao.getAllTransactions();
-        final TransactionResponse response = new TransactionResponse();
-        response.setTransactionId(trxns.getTransactionId());
+    public List<TransactionResponse> getAllTransactions() { //TODO: Implement pagination and filtering with mapper
+        final List<Transaction> transactions = dao.getAllTransactions();
+        final List<TransactionResponse> response = transactions.stream()
+                .map(Util.INSTANCE::transactionMapper)
+                .toList();
         return response;
     }
 }

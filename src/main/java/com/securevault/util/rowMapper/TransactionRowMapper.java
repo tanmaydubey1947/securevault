@@ -21,13 +21,13 @@ public class TransactionRowMapper implements RowMapper<Transaction> {
             transaction.setSender(rs.getString("sender"));
             transaction.setReceiver(rs.getString("receiver"));
             transaction.setAmount(rs.getDouble("amount"));
-            transaction.setTransactionType(rs.getObject("type", TransactionType.class));
-            transaction.setTransactionStatus(rs.getObject("status", TransactionStatus.class));
+            transaction.setTransactionType(TransactionType.fromString(rs.getString("type")));
+            transaction.setTransactionStatus(TransactionStatus.fromString(rs.getString("status")));
             transaction.setBankReference(rs.getString("bank_ref"));
             transaction.setIdempotencyKey(rs.getString("idempotency_key"));
             transaction.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
         } catch (final Exception e) {
-            throw new RuntimeException("Error mapping row to User object", e);
+            throw new RuntimeException("Error mapping row to Transaction object", e);
         }
         return transaction;
     }

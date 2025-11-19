@@ -2,6 +2,7 @@ package com.securevault.controller;
 
 import com.securevault.model.dto.BaseResponse;
 import com.securevault.model.dto.transaction.TransactionRequest;
+import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.service.transaction.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -65,9 +68,9 @@ public class TransactionController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     @GetMapping("getAllTransactions")
-    public ResponseEntity<BaseResponse> getAllTransactions() { //TODO: Implement Pagination and Filtering
+    public ResponseEntity<List<TransactionResponse>> getAllTransactions() { //TODO: Implement Pagination and Filtering
         log.info("Fetching all transaction details...");
-        final BaseResponse response = transactionService.getAllTransactions();
+        final List<TransactionResponse> response = transactionService.getAllTransactions();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
