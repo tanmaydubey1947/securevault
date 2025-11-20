@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static com.securevault.model.entity.transaction.TransactionType.ADJUSTMENT;
 import static com.securevault.model.entity.transaction.TransactionType.TRANSFER;
 
 @Service
@@ -60,6 +61,27 @@ public class TransactionServiceImpl implements TransactionService {
         final List<TransactionResponse> response = transactions.stream()
                 .map(Util.INSTANCE::transactionMapper)
                 .toList();
+        return response;
+    }
+
+    @Override
+    public TransactionResponse adjustment(final TransactionRequest request) {
+        if(request.getAmount() == 0 || request.getReceiverMail() == null) {
+            throw new IllegalArgumentException("Invalid adjustment request");
+        }
+        log.info("Initiating adjustment transaction for user: {}", request.getReceiverMail());
+        final Transaction transaction = new Transaction();
+        transaction.setSender("SYSTEM_ADJUSTMENT");
+        transaction.setReceiver(request.getReceiverMail());
+        transaction.setAmount(request.getAmount());
+        transaction.setTransactionType(ADJUSTMENT);
+        transaction.setBankReference("System Adjustment");
+        transaction.setIdempotencyKey(UUID.randomUUID().toString());
+        int trxId = dao.adjustWalletAmount(transaction);
+
+        transaction.setTransactionId(trxId);
+        final TransactionResponse response = Util.INSTANCE.transactionMapper(transaction);
+        response.setMessage("Adjustment successful");
         return response;
     }
 }

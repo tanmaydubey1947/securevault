@@ -173,5 +173,24 @@ public class TransactionDao {
         );
     }
 
+    public int adjustWalletAmount(final Transaction transaction) {
+        final String userEmail = transaction.getReceiver();
+        final double amount = transaction.getAmount();
+
+        final Wallet wallet = getWallet(userEmail);
+
+        int updated = jdbcTemplate.update(
+                UPDATE_WALLET_SQL, amount, userEmail, wallet.getVersion());
+        if (updated == 0) {
+            throw new ConcurrentWalletUpdateException("Concurrent modification on Wallet during adjustment");
+        }
+
+        transaction.setTransactionStatus(SUCCESS);
+        int txnId = logTransactions(transaction);
+        log.info("Adjustment successful: user={}, amount={}, txnId={}",
+                userEmail, amount, txnId);
+
+        return txnId;
+    }
 
 }

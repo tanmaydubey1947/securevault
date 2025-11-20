@@ -62,7 +62,7 @@ public class TransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "Fetch all transactions")
+    @Operation(summary = "Fetch all transactions - Admin only")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All transactions fetched successfully"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
@@ -71,6 +71,19 @@ public class TransactionController {
     public ResponseEntity<List<TransactionResponse>> getAllTransactions() { //TODO: Implement Pagination and Filtering
         log.info("Fetching all transaction details...");
         final List<TransactionResponse> response = transactionService.getAllTransactions();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Adjustment to/from system wallet - Admin only")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Adjustment successful"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("adjustment")
+    public ResponseEntity<BaseResponse> adjustment(@RequestBody final TransactionRequest request) {
+        log.info("Initiating adjustment...");
+        final BaseResponse response = transactionService.adjustment(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

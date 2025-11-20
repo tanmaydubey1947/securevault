@@ -14,4 +14,6 @@ public interface TransactionService {
     TransactionResponse addToWallet(TransactionRequest transactionRequest);
 
     List<TransactionResponse> getAllTransactions();
+
+    TransactionResponse adjustment(TransactionRequest transactionRequest);
 }

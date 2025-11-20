@@ -36,19 +36,49 @@ public class UserSecurityConfig {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        request -> request
-                                .requestMatchers("/auth/authenticate", "/auth/refreshToken").permitAll()
-                                .requestMatchers("/user/register", "/user/verifyUser", "/user/resetCredentials",
-                                "/user/generateResetToken").permitAll()
-                                .requestMatchers("/transaction/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/transaction/getAllTransactions/**").hasRole("ADMIN")
-                                .requestMatchers("/user/getUserTransactions").hasRole("USER")
-                                .requestMatchers("/user/getUserDetails").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .requestMatchers("/error").permitAll()
-                                .requestMatchers("/auth/**").authenticated()
-                                .requestMatchers("/user/**").authenticated()
+                .authorizeHttpRequests(request -> request
+
+                        // ---------------------------
+                        // PUBLIC ENDPOINTS
+                        // ---------------------------
+                        .requestMatchers(
+                                "/auth/authenticate",
+                                "/auth/refreshToken",
+                                "/user/register",
+                                "/user/verifyUser",
+                                "/user/resetCredentials",
+                                "/user/generateResetToken",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/error"
+                        ).permitAll()
+
+                        // ---------------------------
+                        // ROLE-BASED ENDPOINTS
+                        // ---------------------------
+                        // ADMIN-only transaction endpoints
+                        .requestMatchers(
+                                "/transaction/getAllTransactions/**",
+                                "/transaction/adjustment"
+                        ).hasRole("ADMIN")
+
+                        // USER + ADMIN for all other transaction requests
+                        .requestMatchers("/transaction/**")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        // USER-only endpoint
+                        .requestMatchers("/user/getUserTransactions")
+                        .hasRole("USER")
+
+                        // USER or ADMIN
+                        .requestMatchers("/user/getUserDetails")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        // ---------------------------
+                        // AUTHENTICATED FALLBACK RULES
+                        // ---------------------------
+                        .requestMatchers("/auth/**").authenticated()
+                        .requestMatchers("/user/**").authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
