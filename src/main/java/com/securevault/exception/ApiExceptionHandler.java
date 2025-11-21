@@ -2,6 +2,8 @@ package com.securevault.exception;
 
 import com.securevault.exception.custom.ConcurrentWalletUpdateException;
 import com.securevault.exception.custom.InsufficientBalanceException;
+import com.securevault.exception.custom.UserNotFoundException;
+import com.securevault.exception.custom.WalletNotFoundException;
 import com.securevault.exception.payload.ExceptionMessage;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(ConcurrentWalletUpdateException.class)
-    public ResponseEntity<ExceptionMessage> handleConcurrentWalletUpdateException(ConcurrentWalletUpdateException ex) {
+    public ResponseEntity<ExceptionMessage> handleConcurrentWalletUpdateException(final ConcurrentWalletUpdateException ex) {
         log.error("Unexpected Exception Occurred: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionMessage.builder()
@@ -26,7 +28,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(InsufficientBalanceException.class)
-    public ResponseEntity<ExceptionMessage> handleInsufficientBalanceException(InsufficientBalanceException ex) {
+    public ResponseEntity<ExceptionMessage> handleInsufficientBalanceException(final InsufficientBalanceException ex) {
         log.error("Unexpected Exception Occurred: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionMessage.builder()
@@ -35,8 +37,28 @@ public class ApiExceptionHandler {
                         .build());
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ExceptionMessage> handleUserNotFoundException(final UserNotFoundException ex) {
+        log.error("Unexpected Exception Occurred: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(ExceptionMessage.builder()
+                        .msg(ex.getMessage())
+                        .httpStatus(HttpStatus.NO_CONTENT)
+                        .build());
+    }
+
+    @ExceptionHandler(WalletNotFoundException.class)
+    public ResponseEntity<ExceptionMessage> handleWalletNotFoundException(final WalletNotFoundException ex) {
+        log.error("Unexpected Exception Occurred: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(ExceptionMessage.builder()
+                        .msg(ex.getMessage())
+                        .httpStatus(HttpStatus.NO_CONTENT)
+                        .build());
+    }
+
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionMessage> handleRuntimeException(Exception ex) {
+    public ResponseEntity<ExceptionMessage> handleRuntimeException(final Exception ex) {
         log.error("Unexpected Exception Occurred: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionMessage.builder()
