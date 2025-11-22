@@ -49,7 +49,7 @@ public class TransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "Send to bank")
+    @Operation(summary = "Add to bank")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "User transaction successful"),
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
