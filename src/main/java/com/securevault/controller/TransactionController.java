@@ -68,9 +68,10 @@ public class TransactionController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     @GetMapping("getAllTransactions")
-    public ResponseEntity<List<TransactionResponse>> getAllTransactions() { //TODO: Implement Pagination and Filtering
+    public ResponseEntity<List<TransactionResponse>> getAllTransactions( @RequestParam(defaultValue = "0") int page,
+                                                                         @RequestParam(defaultValue = "10") int size) {
         log.info("Fetching all transaction details...");
-        final List<TransactionResponse> response = transactionService.getAllTransactions();
+        final List<TransactionResponse> response = transactionService.getAllTransactions(page, size);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

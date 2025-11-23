@@ -8,6 +8,9 @@ import com.securevault.model.entity.transaction.Transaction;
 import com.securevault.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,12 +59,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionResponse> getAllTransactions() { //TODO: Implement pagination and filtering with mapper
+    public List<TransactionResponse> getAllTransactions(final int page, final int size) {
+        final Pageable pageable = PageRequest.of(page, size);
         final List<Transaction> transactions = dao.getAllTransactions();
         final List<TransactionResponse> response = transactions.stream()
                 .map(Util.INSTANCE::transactionMapper)
                 .toList();
-        return response;
+        return new PageImpl<>(response, pageable, transactions.size()).get().toList();
     }
 
     @Override

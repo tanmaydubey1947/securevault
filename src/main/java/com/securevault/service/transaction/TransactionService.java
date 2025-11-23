@@ -13,7 +13,7 @@ public interface TransactionService {
 
     TransactionResponse addToWallet(TransactionRequest transactionRequest);
 
-    List<TransactionResponse> getAllTransactions();
+    List<TransactionResponse> getAllTransactions(int page, int size);
 
     TransactionResponse adjustment(TransactionRequest transactionRequest);
 }
