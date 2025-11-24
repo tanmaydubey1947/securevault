@@ -1,6 +1,7 @@
 package com.securevault.controller;
 
 import com.securevault.model.dto.BaseResponse;
+import com.securevault.model.dto.transaction.TransactionRequest;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -92,6 +93,19 @@ public class UserController {
     public ResponseEntity<BaseResponse> getUserTransactions() {
         log.info("Fetching user transaction details...");
         final BaseResponse response = userService.getUserTransactions();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Change Role - Admin only")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Adjustment successful"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("changeRole")
+    public ResponseEntity<BaseResponse> changeRole(@RequestBody final UserRequest request) {
+        log.info("Initiating change role...");
+        final BaseResponse response = userService.changeRole(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

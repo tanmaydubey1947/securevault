@@ -99,6 +99,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public UserResponse changeRole(final UserRequest request) {
+        return  null;
+    }
+
 
     private User buildUserFromRequest(final UserRequest request) {
         return User.builder()

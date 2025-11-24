@@ -1,5 +1,6 @@
 package com.securevault.service.user;
 
+import com.securevault.model.dto.BaseResponse;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
 
@@ -17,4 +18,5 @@ public interface UserService {
 
     UserResponse getUserTransactions();
 
+    BaseResponse changeRole(UserRequest request);
 }

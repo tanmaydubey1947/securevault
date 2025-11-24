@@ -59,7 +59,8 @@ public class UserSecurityConfig {
                         // ADMIN-only transaction endpoints
                         .requestMatchers(
                                 "/transaction/getAllTransactions/**",
-                                "/transaction/adjustment"
+                                "/transaction/adjustment",
+                                "/user/changeRole"
                         ).hasRole("ADMIN")
 
                         // USER + ADMIN for all other transaction requests
