@@ -102,7 +102,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @PostMapping("changeRole")
+    @PutMapping("changeRole")
     public ResponseEntity<BaseResponse> changeRole(@RequestBody final UserRequest request) {
         log.info("Initiating change role...");
         final BaseResponse response = userService.changeRole(request);

@@ -91,4 +91,14 @@ public class UserDao {
         return jdbcTemplate.queryForObject(sql, new WalletRowMapper(), email);
     }
 
+    public void updateUserRole(final String email, final String role) {
+        final String sql = "UPDATE users SET role = ? WHERE email = ?";
+        int update = jdbcTemplate.update(sql, role, email);
+        if (update > 0) {
+            log.info("User with email {} role updated to {}.", email, role);
+        } else {
+            throw new RuntimeException("Failed to update role for user with email " + email);
+        }
+    }
+
 }
