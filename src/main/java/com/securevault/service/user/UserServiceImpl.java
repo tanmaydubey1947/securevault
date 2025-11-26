@@ -101,7 +101,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse changeRole(final UserRequest request) {
-        return  null;
+        final String email = request.getEmail();
+        checkIfUserExists(email);
+        final String newRole = request.getRole();
+        log.info("Changing role for user {} to {}", email, newRole);
+        userDao.updateUserRole(email, newRole);
+        final UserResponse response = new UserResponse();
+        response.setMessage("User role updated successfully.");
+        return response;
     }
 
 
