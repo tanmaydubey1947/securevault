@@ -7,6 +7,9 @@ import com.securevault.service.auth.AuthUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Util {
 
     INSTANCE;
@@ -38,5 +41,16 @@ public enum Util {
         response.setIdempotencyKey(transaction.getIdempotencyKey());
         response.setCreatedAt(transaction.getCreatedAt());
         return response;
+    }
+
+    public List<TransactionResponse> mergeAndSortTransactions(final List<Transaction> creditTransactions,
+                                                              final List<Transaction> debitTransactions) {
+        final List<Transaction> allTransactions = new ArrayList<>();
+        allTransactions.addAll(creditTransactions);
+        allTransactions.addAll(debitTransactions);
+        allTransactions.sort((t1, t2) -> t2.getCreatedAt().compareTo(t1.getCreatedAt()));
+        return allTransactions.stream()
+                .map(this::transactionMapper)
+                .toList();
     }
 }

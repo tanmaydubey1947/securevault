@@ -4,6 +4,7 @@ import com.securevault.model.entity.Wallet;
 import com.securevault.model.entity.transaction.Transaction;
 import com.securevault.model.entity.user.AccountStatus;
 import com.securevault.model.entity.user.User;
+import com.securevault.util.rowMapper.TransactionRowMapper;
 import com.securevault.util.rowMapper.UsersRowMapper;
 import com.securevault.util.rowMapper.WalletRowMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -105,10 +106,12 @@ public class UserDao {
     }
 
     public List<Transaction> getCreditTransactions(final String email) {
-        return null;
+        final String query = "SELECT * FROM transactions where receiver = ?";
+        return jdbcTemplate.query(query, new TransactionRowMapper(), email);
     }
 
     public List<Transaction> getDebitTransactions(final String email) {
-        return null;
+        final String query = "SELECT * FROM transactions where sender = ?";
+        return jdbcTemplate.query(query, new TransactionRowMapper(), email);
     }
 }

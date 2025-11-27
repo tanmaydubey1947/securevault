@@ -103,8 +103,7 @@ public class UserServiceImpl implements UserService {
         final List<Transaction> creditTransactions = userDao.getCreditTransactions(email);
         final List<Transaction> debitTransactions = userDao.getDebitTransactions(email);
         log.info("Fetched transactions for user with email: {}", email);
-        final TransactionResponse response = new TransactionResponse();
-        return null;
+        return Util.INSTANCE.mergeAndSortTransactions(creditTransactions, debitTransactions);
     }
 
     @Override
