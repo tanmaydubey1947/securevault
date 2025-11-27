@@ -1,6 +1,7 @@
 package com.securevault.dao;
 
 import com.securevault.model.entity.Wallet;
+import com.securevault.model.entity.transaction.Transaction;
 import com.securevault.model.entity.user.AccountStatus;
 import com.securevault.model.entity.user.User;
 import com.securevault.util.rowMapper.UsersRowMapper;
@@ -10,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Slf4j
 public class UserDao {
 
     @Autowired private JdbcTemplate jdbcTemplate;
 
-    public User getUserByEmail(final String email) {//TODO: Required Error Handling if no user found
+    public User getUserByEmail(final String email) {
         final String sql = "SELECT * FROM users WHERE email = ?";
         return jdbcTemplate.queryForObject(sql, new UsersRowMapper(), email);
     }
@@ -101,4 +104,11 @@ public class UserDao {
         }
     }
 
+    public List<Transaction> getCreditTransactions(final String email) {
+        return null;
+    }
+
+    public List<Transaction> getDebitTransactions(final String email) {
+        return null;
+    }
 }

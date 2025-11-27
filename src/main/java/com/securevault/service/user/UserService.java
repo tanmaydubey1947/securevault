@@ -1,8 +1,11 @@
 package com.securevault.service.user;
 
 import com.securevault.model.dto.BaseResponse;
+import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -16,7 +19,7 @@ public interface UserService {
 
     UserResponse resetCredentials(UserRequest request);
 
-    UserResponse getUserTransactions();
+    List<TransactionResponse> getUserTransactions();
 
     BaseResponse changeRole(UserRequest request);
 }

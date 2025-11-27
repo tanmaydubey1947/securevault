@@ -4,9 +4,11 @@ import com.securevault.dao.UserDao;
 import com.securevault.event.notification.NotificationProducer;
 import com.securevault.exception.custom.UserNotFoundException;
 import com.securevault.model.dto.notification.NotificationRequest;
+import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.model.dto.user.UserResponse;
 import com.securevault.model.entity.Wallet;
+import com.securevault.model.entity.transaction.Transaction;
 import com.securevault.model.entity.user.Role;
 import com.securevault.model.entity.user.User;
 import com.securevault.service.auth.JwtService;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.securevault.model.entity.user.AccountStatus.ACTIVE;
 import static com.securevault.model.entity.user.AccountStatus.PENDING_VERIFICATION;
@@ -95,7 +98,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUserTransactions() {
+    public List<TransactionResponse> getUserTransactions() {
+        final String email = Util.INSTANCE.getCurrentEmail();
+        final List<Transaction> creditTransactions = userDao.getCreditTransactions(email);
+        final List<Transaction> debitTransactions = userDao.getDebitTransactions(email);
+        log.info("Fetched transactions for user with email: {}", email);
+        final TransactionResponse response = new TransactionResponse();
         return null;
     }
 

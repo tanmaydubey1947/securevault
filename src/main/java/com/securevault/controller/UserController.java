@@ -1,7 +1,7 @@
 package com.securevault.controller;
 
 import com.securevault.model.dto.BaseResponse;
-import com.securevault.model.dto.transaction.TransactionRequest;
+import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.model.dto.user.UserRequest;
 import com.securevault.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -90,9 +92,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error"),
     })
     @GetMapping("getUserTransactions")
-    public ResponseEntity<BaseResponse> getUserTransactions() {
+    public ResponseEntity<List<TransactionResponse>> getUserTransactions() {
         log.info("Fetching user transaction details...");
-        final BaseResponse response = userService.getUserTransactions();
+        final List<TransactionResponse> response = userService.getUserTransactions();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
