@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse generateResetToken(final UserRequest request) {//TODO: Same token can be used to reset multiple times within validity
         final String email = request.getEmail();
-        final String token = jwtService.generatePasswordResetToken(email);
         checkIfUserExists(email);
+        final String token = jwtService.generatePasswordResetToken(email);
 //        userDao.savePasswordResetToken(email, token);
         log.info("Generated password reset token for user with email: {}", email);
         sendPasswordResetToken(email, token);
