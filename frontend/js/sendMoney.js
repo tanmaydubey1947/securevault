@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const res = await apiRequest('/wallet/send', 'POST', { recipient, amount });
         alert(`✅ Sent $${amount} successfully!`);
-        window.location.href = 'dashboard.html';
+        window.location.href = 'dashboard-user.html';
       } catch {
         alert('❌ Transaction failed.');
       }

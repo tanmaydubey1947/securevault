@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   // Retrieve token from session storage
   const token = sessionStorage.getItem('authToken');
-  const email = sessionStorage.getItem('userMail');
 
   // Redirect to login if no token found
   if (!token) {
