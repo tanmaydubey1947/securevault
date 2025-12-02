@@ -60,7 +60,8 @@ public class UserSecurityConfig {
                         .requestMatchers(
                                 "/transaction/getAllTransactions/**",
                                 "/transaction/adjustment",
-                                "/user/changeRole"
+                                "/user/changeRole",
+                                "/user/getAllUsers"
                         ).hasRole("ADMIN")
 
                         // USER + ADMIN for all other transaction requests

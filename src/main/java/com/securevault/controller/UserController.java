@@ -3,6 +3,7 @@ package com.securevault.controller;
 import com.securevault.model.dto.BaseResponse;
 import com.securevault.model.dto.transaction.TransactionResponse;
 import com.securevault.model.dto.user.UserRequest;
+import com.securevault.model.dto.user.UserResponse;
 import com.securevault.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -108,6 +109,18 @@ public class UserController {
     public ResponseEntity<BaseResponse> changeRole(@RequestBody final UserRequest request) {
         log.info("Initiating change role...");
         final BaseResponse response = userService.changeRole(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get All Users - Admin only")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Fetched all users successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error"),
+    })
+    @GetMapping("getAllUsers")
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        log.info("Fetching all users...");
+        final List<UserResponse> response = userService.getAllUsers();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

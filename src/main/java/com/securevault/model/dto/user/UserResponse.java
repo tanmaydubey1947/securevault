@@ -6,20 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse extends BaseResponse {
 
-    private Long id;
+    private Integer id;
     private String fullName;
     private String email;
     private String phoneNumber;
     private String role;
     private String accountStatus;
     private String kycStatus;
-    private double availableAmount;
-    private double pendingAmount;
-    private int walletVersion;
+    private LocalDateTime createdAt;
+    private Double availableAmount;
+    private Double pendingAmount;
+    private Integer walletVersion;
 }

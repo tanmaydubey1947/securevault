@@ -114,4 +114,14 @@ public class UserDao {
         final String query = "SELECT * FROM transactions where sender = ?";
         return jdbcTemplate.query(query, new TransactionRowMapper(), email);
     }
+
+    public List<User> getAllUsers() {
+        final String sql = "SELECT * FROM users";
+        return jdbcTemplate.query(sql, new UsersRowMapper());
+    }
+
+    public List<Wallet> getAllWallets() {
+        final String sql = "SELECT * FROM wallets";
+        return jdbcTemplate.query(sql, new WalletRowMapper());
+    }
 }

@@ -118,6 +118,14 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    @Override
+    public List<UserResponse> getAllUsers() {
+        final List<User> users = userDao.getAllUsers();
+        final List<Wallet> wallets = userDao.getAllWallets();
+        log.info("Fetched all users. Total count: {}", users.size());
+        return Util.INSTANCE.mergeWalletWithUser(users, wallets);
+    }
+
 
     private User buildUserFromRequest(final UserRequest request) {
         return User.builder()

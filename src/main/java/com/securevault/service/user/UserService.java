@@ -22,4 +22,6 @@ public interface UserService {
     List<TransactionResponse> getUserTransactions();
 
     BaseResponse changeRole(UserRequest request);
+
+    List<UserResponse> getAllUsers();
 }
