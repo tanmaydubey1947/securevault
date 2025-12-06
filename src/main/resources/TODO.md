@@ -1,5 +1,5 @@
 ### Admin Portal
-- Implement the admin portal for managing users, roles, and permissions.
+- Implement the admin portal for managing users, roles, and permissions.: done
 
 ### Bank Only Back-End
 - Develop the back-end functionality for bank-related operations.
@@ -14,8 +14,8 @@
 - Integrate with the bank's API for secure fund transfers.
 
 ### UI Adjust Accordingly
-- Update the user interface to reflect the new features.
-- Ensure the UI is user-friendly and responsive.
+- Update the user interface to reflect the new features.: done
+- Ensure the UI is user-friendly and responsive.: done
 
 ### Pipeline Build
 - Set up a CI/CD pipeline to automate the build process.
