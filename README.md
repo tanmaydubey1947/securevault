@@ -29,3 +29,4 @@ The PaymentService and UserService communicate through Kafka. Kafka serves as a 
 - **main**: The default branch where the stable version of the application resides.
 - **payment-service**: Contains the code and features related to the PaymentService.
 - **user-service**: Contains the code and features related to the UserService.
+  
